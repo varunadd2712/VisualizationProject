@@ -63,7 +63,13 @@ class YearChart {
         .on("click", function(d) {
           d3.selectAll("circle").classed("selected",false);
           d3.select(this).classed("selected",true);
-        });
+          d3.csv("data/TotalOffenses_2016.csv").then(offenseResult => {
+          that.statesBarChart.update(offenseResult)
+          })
+
+          });
+
+
 
         gselection.append("text")
         .attr("x", 0)

@@ -4,17 +4,17 @@ class YearChart {
      * Constructor for the Year Chart
      * Pass objects of the other charts here.
      */
-    constructor () {
+    constructor (statesBarChart, geographicalMapChart) {
 
+        this.statesBarChart = statesBarChart;
+        this.geographicalMapChart = geographicalMapChart;
         //Creating YearChart instance
 
         // Initializes the svg elements required for this chart
-        this.margin = {top: 10, right: 20, bottom: 20, left: 50};
         let divyearChart = d3.select("#year-chart").classed("fullview", true);
 
-        //fetch the svg bounds
         this.svgBounds = divyearChart.node().getBoundingClientRect();
-        //this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
+
         this.svgWidth = 1500;
         this.svgHeight = 50;
 

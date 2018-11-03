@@ -50,7 +50,7 @@ class StatesBarChart {
 
 
 
-
+        this.svg.selectAll("g").remove();
         let gRect = this.svg.append("g") .attr("transform", "translate(0,25)");
 
 

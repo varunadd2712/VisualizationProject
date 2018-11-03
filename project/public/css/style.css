@@ -37,6 +37,15 @@ h1 {
     float:left;
 }
 
+.twoThirdViewCenter{
+    display: inline-block;
+    width: 70%;
+      float: left;
+      position: relative;
+      margin-left: 350px;
+      margin-top: 35px; 
+}
+
 .yearChart{
     stroke: #FFF;
 }

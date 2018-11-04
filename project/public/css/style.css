@@ -43,7 +43,7 @@ h1 {
       float: left;
       position: relative;
       margin-left: 350px;
-      margin-top: 35px; 
+      margin-top: 35px;
 }
 
 .yearChart{
@@ -78,6 +78,7 @@ h1 {
     display: inline-block;
     width: 25%;
     float:right;
+    margin-right: 350px;
 }
 
 h2{

@@ -66,11 +66,13 @@ class YearChart {
           d3.select(this).classed("selected",true);
 
           d3.csv("data/TotalOffenses_2016.csv").then(offenseResult => {
-          that.statesBarChart.update(offenseResult)
+            that.statesBarChart.update(offenseResult)
           })
 
           d3.csv("data/OffenseTypesFormatted_2016.csv").then(offenseTypes => {
-          that.treemap.update(offenseTypes)
+            d3.csv("data/OffenseTypes_2016.csv").then(offenseTypesUnformatted => {
+                that.treemap.update(offenseTypes, offenseTypesUnformatted);
+            })
           })
 
           });

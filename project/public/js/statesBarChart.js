@@ -8,7 +8,7 @@ class StatesBarChart {
     let divStateChart = d3.select("#states-bar-chart").classed("sideBar", true);
     this.svgBounds = divStateChart.node().getBoundingClientRect();
 
-    this.svgWidth = 500;
+    this.svgWidth = 750;
     this.svgHeight = 1500;
     this.padding = 25;
 
@@ -33,7 +33,7 @@ class StatesBarChart {
 
         let xScale = d3.scaleLinear()
             .domain([min, max])
-            .range([0, this.svgWidth])
+            .range([0, this.svgWidth-70])
             .nice();
         let xAxis = d3.axisTop();
         xAxis.scale(xScale);
@@ -63,6 +63,9 @@ class StatesBarChart {
             .attr("transform", "translate(" + this.padding + "," + this.padding + ")")
             .attr("x",xScale(0))
             .attr("y", (d, i) => i * spacing + 5)
+            .attr("width", d => xScale((min)))
+            .style("fill", "red")
+            .transition().duration(3000)
             .attr("width", d => xScale((d.TOTAL_OFFENSES * 1000000)/d.POPULATION))
             .attr("height", 20)
             .style("fill", "red");
@@ -72,8 +75,8 @@ class StatesBarChart {
                             .enter()
                             .append("text")
                             .attr("transform", "translate(" + this.padding + "," + this.padding + ")")
-                            .attr("x",d=>xScale(((d.TOTAL_OFFENSES * 1000000)/d.POPULATION)+10))
-                            .attr("y",(d, i) => i * spacing + 5)
+                            .attr("x",d=>xScale(((d.TOTAL_OFFENSES * 1000000)/d.POPULATION)+2))
+                            .attr("y",(d, i) => i * spacing)
                             .attr("dy","1.2em")
                             .text(function(d){
                                 return d.STATE;

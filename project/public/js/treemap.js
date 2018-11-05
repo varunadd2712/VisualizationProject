@@ -103,10 +103,10 @@ class Treemap {
 
     cell.append("rect")
     .attr("width", 0)
+    .attr("height", d => d.y1 - d.y0)
     .transition()
     .duration(3000)
     .attr("width", d => d.x1 - d.x0)
-    .attr("height", d => d.y1 - d.y0)
     .attr("fill", d =>  {
       let a = d.ancestors();
       return color(a[a.length - 2].id);

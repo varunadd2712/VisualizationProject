@@ -13,16 +13,24 @@ class GeographicalMapChart{
 	    .attr("width", this.svgWidth)
 	    .attr("height", this.svgHeight)
 	    .attr("id", "GeoMapSVG");
-	    
+
+	    let infobox = d3.select("#infobox");
+	    this.infosvg = infobox.append("svg")
+	    					.attr("width",this.svgWidth/2)
+                            .attr("height",75)
+                            .attr("transform","translate(0,0)");
+
 	    let legendHeight = 150;
         //add the svg to the div
-        let legend = d3.select("#legend");
-
+        let legend = d3.select("#geographical-map-chart").append("div")
         // creates svg elements within the div
         this.legendSvg = legend.append("svg")
                             .attr("width",this.svgWidth)
                             .attr("height",legendHeight)
-                            .attr("transform","translate(0,800)");
+                            .attr("transform","translate(0,0)");
+
+
+	   	
 	};
 
 	drawMap(){
@@ -60,9 +68,24 @@ class GeographicalMapChart{
 	};
 
 
+	tooltip_render(tooltip_data) {
+        let text =tooltip_data.state ;
+        text +=  "Crime per million: " + tooltip_data.crimes;
+        return text;
+    }
+
+
+
+
+
 	update(data){
 
 		let that = this
+
+
+
+
+
 		async function choropleth() {
             
             let projection = d3.geoAlbersUsa()
@@ -86,15 +109,10 @@ class GeographicalMapChart{
             	data_array.push(temp_dict)
         	}
 
+        	let minData= d3.min(data_array, function (d) {return d.value;})
+        	let maxData= d3.max(data_array, function (d) {return d.value;})
             // Set input domain for color scale based on the lowest and highest values in the data
-            color.domain([
-                d3.min(data_array, function (d) {
-                    return d.value;
-                }),
-                d3.max(data_array, function (d) {
-                    return d.value;
-                })
-            ]);
+            color.domain([minData,maxData]);
 
 
             let dataLookup = {};
@@ -114,49 +132,89 @@ class GeographicalMapChart{
             // Bind data and create one path per GeoJSON feature
             d3.select("#mapLayer").remove()
             that.geoMapSVG.append("g").attr("id","mapLayer")
-            d3.select("#mapLayer").selectAll("path")
+            let allstates =d3.select("#mapLayer").selectAll("path")
                 .data(json.features)
                 .enter()
                 .append("path")
+                .style("fill","white")
                 .transition()
                 .duration(3000)
                 // here we use the familiar d attribute again to define the path
                 .attr("d", path)
                 .style("fill", function (d) {
-                	console.log(d.properties.value)
                     return color(d.properties.value);
-                });
+                })
+                .style("stroke","white")
+                .style("stroke-width", 1);
             
-            let legendQuantile = d3.legendColor()
-            .shapeWidth((that.svgWidth+1200)/12)
-            .cells(5)
-            .orient('horizontal')
-            .labelFormat(d3.format('.1r'))
-            .scale(color);
+            // let legendQuantile = d3.legendColor()
+            // .shapeWidth((that.svgWidth+1200)/12)
+            // .cells(5)
+            // .orient('horizontal')
+            // .labelFormat(d3.format('.1r'))
+            // .scale(color);
 
-            that.legendSvg.attr("align","center")
-            that.legendSvg.call(legendQuantile)
+            // that.legendSvg.attr("align","center")
+            // that.legendSvg.call(legendQuantile)
+
+            that.legendSvg.selectAll('*').remove();
+
+	        // append gradient bar
+	        var gradient = that.legendSvg.append('defs')
+	            .append('linearGradient')
+	            .attr('id', 'gradient')
+	            
+	        gradient.append('stop')
+                .attr('offset', '0')
+                .attr('stop-color',"#ffe6e6");
+
+            gradient.append('stop')
+                .attr('class', 'stop-right')
+                .attr('offset', '1')
+                .attr('stop-color',"#cc0000");
+
+	        
+
+	        that.legendSvg.append('rect')
+	            .attr('x1', 0)
+	            .attr('y1', 0)
+	            .attr('width', that.svgWidth/2)
+	            .attr('height', 10)
+	            .attr("transform","translate(200,0)")
+	            .style('fill', 'url(#gradient)');
+
+	        // create a scale and axis for the legend
+	        var legendScale = d3.scaleLinear().domain([minData-minData%100,maxData+(100-maxData%100)]).range([0,that.svgWidth/2])
+
+	        var legendAxis = d3.axisBottom().scale(legendScale).ticks(5);
+
+	        that.legendSvg.append("g")
+	            .attr("class", "legend axis")
+	            .attr("transform", function(d, i) {  return "translate("+(200)+",15 )"; })
+	            .call(legendAxis)
+
+	        
+	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseover",function(d){
+	    		let tooltip_data = {"state":d.properties.name,"crimes":d3.format('.2f')(d.properties.value)}
+	    		that.infosvg.append("text").attr("x",0).attr("y",50).html(d.properties.name)
+	    		that.infosvg.append("text").attr("x",0).attr("y",75).html("Crime per million: " + tooltip_data["crimes"])
+	    		d3.select(this).style("stroke","white").style("stroke-width",4)
+	    	})
+	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseout",function(d){
+	          	that.infosvg.selectAll("text").remove()
+	          	d3.select(this).style("stroke","white")
+                .style("stroke-width", 1);
+	          })
+	            
+
+
         };
         
-
         choropleth();
+	    
         
 	}
 
-	legend(colorScale){
 
-		console.log(colorScale)
-        var colorLegend = d3.legend.color()
-        	.labelFormat(d3.format(".0f"))
-        	.scale(colorScale)
-        	.shapePadding(5)
-        	.shapeWidth(50)
-        	.shapeHeight(20)
-        	.labelOffset(12);
-
-      	this.geoMapSvg.append("g")
-        .attr("transform", "translate(550, 400)")
-        .call(colorLegend);
-    }
 
 };

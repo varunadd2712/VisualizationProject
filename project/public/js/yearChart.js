@@ -10,10 +10,11 @@ class YearChart {
         this.geographicalMapChart = geographicalMapChart;
         this.treemap = treemap;
         this.donutChart = donutChart;
+        this.selectedYear = null;
         //Creating YearChart instance
 
         // Initializes the svg elements required for this chart
-        let divyearChart = d3.select("#year-chart").classed("fullview", true);
+        let divyearChart = d3.select("#year-chart").classed("year-chart", true);
 
         this.svgBounds = divyearChart.node().getBoundingClientRect();
 
@@ -25,6 +26,10 @@ class YearChart {
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight)
     };
+
+    getSelectedYear() {
+      return this.selectedYear;
+    }
 
     /**
      * Creates a chart with circles representing each year, populates text content and other required elements for the Year Chart
@@ -63,6 +68,7 @@ class YearChart {
           d3.select(this).classed("highlighted",false);
         })
         .on("click", function(d) {
+          that.selectedYear = d;
           d3.selectAll("circle").classed("selected",false);
           d3.select(this).classed("selected",true);
 

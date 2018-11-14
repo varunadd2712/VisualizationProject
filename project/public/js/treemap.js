@@ -7,13 +7,15 @@ class Treemap {
   */
   constructor () {
     let divMapChart = d3.select("#treemap-chart").classed("fullview", true);
+    let victimChart = d3.select("#victimsChart").classed("fullView", true);
     this.svgBounds = divMapChart.node().getBoundingClientRect();
+    this.svgBounds = victimChart.node().getBoundingClientRect();
 
     this.svgWidth = 800;
     this.svgHeight = 667;
 
     //add the svg to the div
-    this.totalVictimsSVG = divMapChart.append("svg")
+    this.totalVictimsSVG = victimChart.append("svg")
     .attr("width", this.svgWidth)
     .attr("height", this.svgHeight)
     .attr("id", "totalVictimsSVG");

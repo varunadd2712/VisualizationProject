@@ -18,13 +18,24 @@
 </head>
 
 <body>
-
-<h1>Hate Crimes in United States from 2008 to 2016</h1>
+  <div class="tab">
+    <button class="tablinks" onclick="openDiv(event, 'Summary')">Summary</button>
+    <button class="tablinks" onclick="openDiv(event, 'Map')">Stats on a Map</button>
+    <button class="tablinks" onclick="openDiv(event, 'Breakdown')">Stats Breakdown</button>
+    <button class="tablinks" onclick="openDiv(event, 'StateCompare')">Compare States</button>
+  </div>
 
 <!-- year chart -->
 <div id="year-chart" class="view">
 </div>
+<br/>
+<br/>
+<br/>
+<br/>
 
+<div id="victimsChart" class="view">
+  <h2> Total number of Victims and Propotions of Crimes
+</div>
 
 <div id="treemap-chart" class="view">
   <h2> Total number of Victims and Propotions of Crimes
@@ -33,7 +44,7 @@
 <div id="geographical-map-chart" class="view">
     <h2> State-wise Crime Rate in the United States
     <div id="infobox" class = "view"></div></h2>
-    
+
 </div>
 
 <div id="states-bar-chart" class="view">

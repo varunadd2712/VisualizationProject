@@ -4,11 +4,12 @@ class YearChart {
      * Constructor for the Year Chart
      * Pass objects of the other charts here.
      */
-    constructor (statesBarChart, geographicalMapChart, treemap) {
+    constructor (statesBarChart, geographicalMapChart, treemap, donutChart) {
 
         this.statesBarChart = statesBarChart;
         this.geographicalMapChart = geographicalMapChart;
         this.treemap = treemap;
+        this.donutChart = donutChart;
         //Creating YearChart instance
 
         // Initializes the svg elements required for this chart
@@ -65,9 +66,13 @@ class YearChart {
           d3.selectAll("circle").classed("selected",false);
           d3.select(this).classed("selected",true);
 
-          d3.csv("data/TotalOffenses_2016.csv").then(offenseResult => {
+          d3.csv("data/TotalOffenses_"+d+".csv").then(offenseResult => {
             that.statesBarChart.update(offenseResult)
             that.geographicalMapChart.update(offenseResult)
+          })
+
+          d3.csv("data/Types2016.csv").then(typesResult =>{
+            that.donutChart.update(typesResult);
           })
 
           d3.csv("data/OffenseTypesFormatted_2016.csv").then(offenseTypes => {

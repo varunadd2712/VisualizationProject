@@ -19,7 +19,7 @@ class StatesBarChart {
   };
   update(data)
   {
-        console.log(data);
+        //console.log(data);
         let array =[]
         for (let i =0;i< data.length;i++){
             array.push((data[i].TOTAL_OFFENSES*1000000)/data[i].POPULATION)

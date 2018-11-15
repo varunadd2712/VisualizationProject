@@ -2,8 +2,9 @@
 
 body {
     font-family: Lato;
-    padding:40px;
     background-color: white;
+    padding: 30px
+    margin: 20px;
 }
 
 h1 {
@@ -29,15 +30,24 @@ h1 {
 
 .fullView{
     display: inline-block;
-    width: 75%;
+    width: 100%;
 }
 
+.fullViewWithBorder{
+    display: inline-block;
+    width: 100%;
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+    border-bottom-style: solid;
+}
 /* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: black;
-    color: white
+    color: white;
+    border-width: 10px;
+    border-color: black;
 }
 
 /* Style the buttons inside the tab */
@@ -65,7 +75,7 @@ h1 {
 
 .year-chart{
     display: inline-block;
-    width: 100%;
+    width: 85%;
     background-color: white;
 }
 

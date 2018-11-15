@@ -7,18 +7,10 @@ class Treemap {
   */
   constructor () {
     let divMapChart = d3.select("#treemap-chart").classed("fullview", true);
-    let victimChart = d3.select("#victimsChart").classed("fullView", true);
     this.svgBounds = divMapChart.node().getBoundingClientRect();
-    this.svgBounds = victimChart.node().getBoundingClientRect();
 
     this.svgWidth = 800;
     this.svgHeight = 667;
-
-    //add the svg to the div
-    this.totalVictimsSVG = victimChart.append("svg")
-    .attr("width", this.svgWidth)
-    .attr("height", this.svgHeight)
-    .attr("id", "totalVictimsSVG");
 
     this.treemapSVG = divMapChart.append("svg")
     .attr("width", this.svgWidth)
@@ -26,56 +18,9 @@ class Treemap {
     .attr("id", "treemapSVG");
   };
 
-  generateArrayOfVictimData(numberOfCirclesRequired) {
-
-    let victimData = [];
-    while(numberOfCirclesRequired > 0) {
-      victimData.push(1);
-      numberOfCirclesRequired--;
-    }
-
-    return victimData;
-  }
 
   update(data, unformattedData)
   {
-    console.log(unformattedData[0].Victims);
-
-    let numberOfCirclesRequired = unformattedData[0].Victims/50;
-    let numberOfCirclesPerRow = 14;
-    let maxNumberOfRows = 12;
-    numberOfCirclesRequired = Math.round(numberOfCirclesRequired);
-
-    console.log(numberOfCirclesRequired);
-
-    let xAxis = d3.scaleLinear().domain([0, numberOfCirclesPerRow]).range([10, this.svgWidth]);
-    let yAxis = d3.scaleLinear().domain([0, maxNumberOfRows]).range([10, this.svgHeight - 10]);
-
-    let victimData = this.generateArrayOfVictimData(numberOfCirclesRequired);
-
-    this.totalVictimsSVG.selectAll("g").remove();
-
-    this.totalVictimsSVG.selectAll("rect").remove();
-
-    let circleCell = this.totalVictimsSVG.selectAll("g").data(victimData).enter().append("g")
-          .attr("transform", function(d, i) {
-            let xPosition = xAxis(i%numberOfCirclesPerRow);
-            let yPosition = yAxis(Math.trunc(i/numberOfCirclesPerRow));
-            console.log(yPosition);
-            return "translate(" + xPosition + "," + yPosition + ")";
-          });
-
-    //circleCell.append("circle").attr("r", 10).attr("fill", "red");
-    circleCell.append("svg:image")
-      .attr("class", "twitter-pic")
-      .attr("xlink:href", "data/Person.png")
-      .attr("width", 40)
-      .attr("height", 40)
-      .attr("opacity", 0)
-      .transition()
-      .delay(function(d,i){ return i * 50 })
-      .attr("opacity", 1);
-
 
     let root = d3.stratify()
     .id(d => d.id)

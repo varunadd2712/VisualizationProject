@@ -226,3 +226,8 @@ h3{
             stroke-width: 1px;
             stroke: #222;
 }
+
+.half-donut .label {
+      font-size: 1.5rem;
+      font-family: "Arial Black";
+}

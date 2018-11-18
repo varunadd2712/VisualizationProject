@@ -77,11 +77,12 @@ class YearChart {
           d3.csv("data/TotalOffenses_"+d+".csv").then(offenseResult => {
             that.statesBarChart.update(offenseResult)
             that.geographicalMapChart.update(offenseResult)
+            d3.csv("data/Types2016.csv").then(typesResult =>{
+              that.donutChart.update(typesResult,offenseResult);
+          })
           })
 
-          d3.csv("data/Types2016.csv").then(typesResult =>{
-            that.donutChart.update(typesResult);
-          })
+         
 
           d3.csv("data/OffenseTypesFormatted_2016.csv").then(offenseTypes => {
             d3.csv("data/OffenseTypes_2016.csv").then(offenseTypesUnformatted => {

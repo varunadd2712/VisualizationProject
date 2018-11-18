@@ -14,10 +14,127 @@ class DonutChart {
         .attr("width", this.svgWidth + 2*this.padding)
         .attr("height", this.svgHeight + 2*this.padding)
 
+    this.donutSVG = divDonutChart.append("svg").attr("width",750).attr("height",500).classed("sideBar",true)
+
+    
+
     };
 
-    update(data) {
+    prepareDonut(blueState,redState,data,data_pop){
+    	console.log(data_pop)
+    	let sum=0
+  		let prop_blue =0
+  		let prop_red =0
+  		for(let i=0;i<data_pop.length;++i){
+  			sum += parseInt(data_pop[i]["TOTAL_OFFENSES"])/parseInt(data_pop[i]["POPULATION"])
+  			if(data_pop[i]["STATE"]== blueState)
+  				prop_blue = data_pop[i]["TOTAL_OFFENSES"]/parseInt(data_pop[i]["POPULATION"]) 
+  			if(data_pop[i]["STATE"]== redState)
+  				prop_red = data_pop[i]["TOTAL_OFFENSES"]/parseInt(data_pop[i]["POPULATION"])
+  		}
+
+  		prop_blue = prop_blue/sum
+  		prop_red = prop_red/sum
+
+
+
+    	let text1 = Math.round(prop_blue * 100) + '%'
+    	let text2 = Math.round(prop_red * 100) + '%'
+    	let data1 = [prop_blue, 1 - prop_blue]
+    	let data2 = [prop_red, 1 - prop_red]
+
+    	let width = 200
+	    let height = 100
+	    let anglesRange = 0.5 * Math.PI
+	    let radis = Math.min(width, 2 * height) / 2
+	    var thickness = 100
+	    // Utility 
+	//     var colors = d3.scale.category10();
+	    var colors1 = ["#5EBBF8", "#F5F5F5"]
+	    var colors2 = ["#CC0000", "#F5F5F5"]
+	    
+	    var pies = d3.pie()
+	    	.value( d => d)
+	    	.sort(null)
+	    	.startAngle( anglesRange * -1)
+	    	.endAngle( anglesRange)
+	    
+			var arc = d3.arc()
+	    	.outerRadius(radis)
+	    	.innerRadius(radis/2)
+
+	    var pies2 = d3.pie()
+	    	.value( d => d)
+	    	.sort(null)
+	    	.startAngle( anglesRange * -1)
+	    	.endAngle( anglesRange)
+	    
+			var arc = d3.arc()
+	    	.outerRadius(radis)
+	    	.innerRadius(radis/2)
+	    
+	    let translation = (x, y) => `translate(${x}, ${y})`
+
+
+	    	
+	    // Feel free to change or delete any of the code you see in this editor!
+	   	this.donutSVG.selectAll("g").remove()
+	    let svg = this.donutSVG
+	    	//.attr("class", "half-donut")
+			.append("g")
+	    	.attr("transform", translation(width / 2, height))
+
+	    let svg2 = this.donutSVG
+	    	//.attr("class", "half-donut")
+			.append("g")
+	    	.attr("transform", translation(width / 2 +250, height))
+	    
+	    
+	    svg.selectAll("path")
+	    	.data(pies(data1))
+	    	.enter()
+	    	.append("path")
+	    	.attr("fill", (d, i) => colors1[i])
+	    	.attr("d", arc)
+	    	
+	    
+		svg.append("text")
+	    	.text( d => text1)
+	    	.attr("dy", "0rem")
+	    	.attr("dx", "-1rem")
+	    	.attr("class", "label")
+	    svg.append("text")
+	    	.text(blueState)
+	    	.attr("dy", "2rem")
+	    	.attr("class", "label")
+	    	.attr("text-anchor","middle")
+
+	    svg2.selectAll("path")
+	    	.data(pies(data2))
+	    	.enter()
+	    	.append("path")
+	    	.transition()
+	    	.duration(3000)
+	    	.attr("fill", (d, i) => colors2[i])
+	    	.attr("d", arc)
+	    svg2.append("text")
+	    	.text(redState)
+	    	.attr("dy", "2rem")
+	    	.attr("class", "label")
+	    	.attr("text-anchor","middle")
+	    	
+	    
+		svg2.append("text")
+	    	.text( d => text2)
+	    	.attr("dy", "0rem")
+	    	.attr("dx", "-1rem")
+	    	.attr("class", "label")
+	    	//.attr("transform",translation(250, 0)
+    	}
+
+    update(data,data2) {
     console.log(data);
+    d3.select("#chart").selectAll("select").remove()
     let d=[[
         {axis:"Murder", value:0},
         {axis:"Rape", value:0.0008},
@@ -48,6 +165,43 @@ class DonutChart {
     ]];
 
    //let colorscale = d3.scale.category10();
+   let states=[]
+   for(let i=0;i<data.length;++i){
+   	states.push(data[i]["State"])
+   }
+
+   let blueState = "Alabama"
+   let redState = "Alabama"
+   let that =this
+   this.prepareDonut(blueState,redState,data,data2);
+   let dropdownChange = function() {
+                    var newCereal = d3.select(this).property('value')
+                    blueState = newCereal
+                	that.prepareDonut(blueState,redState,data,data2);};
+   let dropdownChange2 = function() {
+                    var newCereal = d3.select(this).property('value')
+                    redState = newCereal
+                	that.prepareDonut(blueState,redState,data,data2);};
+
+
+   let dropdown = d3.select("#chart").insert("select","svg").on("change", dropdownChange);
+   let dropdown2 = d3.select("#chart").insert("select","svg").on("change", dropdownChange2);
+
+    dropdown.selectAll("option")
+            .data(states)
+            .enter().append("option")
+            .attr("value", function (d) { return d; })
+            .text(function (d) {
+            return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
+            });
+
+    dropdown2.selectAll("option")
+            .data(states)
+            .enter().append("option")
+            .attr("value", function (d) { return d; })
+            .text(function (d) {
+            return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
+            });
 
   let mycfg = {
   w: this.svgWidth,

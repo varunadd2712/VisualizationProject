@@ -82,15 +82,13 @@ class YearChart {
           })
           })
 
-         
+
 
           d3.csv("data/OffenseTypesFormatted_2016.csv").then(offenseTypes => {
-            d3.csv("data/OffenseTypes_2016.csv").then(offenseTypesUnformatted => {
-                that.treemap.update(offenseTypes, offenseTypesUnformatted);
-            })
+            that.treemap.update(offenseTypes);
           })
 
-          d3.csv("data/Victims_2016.csv").then(offenseTypesUnformatted => {
+          d3.csv("data/Victims_"+d+".csv").then(offenseTypesUnformatted => {
                 that.victimChart.update(offenseTypesUnformatted);
             })
           });

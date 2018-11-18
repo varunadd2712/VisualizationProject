@@ -7,6 +7,7 @@ class GeographicalMapChart{
 
     	this.svgWidth = 800;
     	this.svgHeight = 667;
+			this.currentData = null;
 
 	    //add the svg to the div
 	    this.geoMapSVG = divMapChart.append("svg")
@@ -30,7 +31,7 @@ class GeographicalMapChart{
                             .attr("transform","translate(0,0)");
 
 
-	   	
+
 	};
 
 	drawMap(){
@@ -76,18 +77,17 @@ class GeographicalMapChart{
 
 
 
+	updateFromScript() {
+	   this.update(this.currentData);
+	}
 
-
-	update(data){
+	update(data) {
 
 		let that = this
-
-
-
-
+		that.currentData = data;
 
 		async function choropleth() {
-            
+
             let projection = d3.geoAlbersUsa()
                 .translate([that.svgWidth / 2, that.svgHeight / 2])
                 .scale([900]);
@@ -100,7 +100,7 @@ class GeographicalMapChart{
 
             // Load in GeoJSON data
             let json = await d3.json("us-states.json");
-            
+
             let data_array =[]
         	for (let i =0;i< data.length;i++){
         		let temp_dict={}
@@ -146,7 +146,7 @@ class GeographicalMapChart{
                 })
                 .style("stroke","white")
                 .style("stroke-width", 1);
-            
+
             // let legendQuantile = d3.legendColor()
             // .shapeWidth((that.svgWidth+1200)/12)
             // .cells(5)
@@ -163,7 +163,7 @@ class GeographicalMapChart{
 	        var gradient = that.legendSvg.append('defs')
 	            .append('linearGradient')
 	            .attr('id', 'gradient')
-	            
+
 	        gradient.append('stop')
                 .attr('offset', '0')
                 .attr('stop-color',"#ffe6e6");
@@ -173,7 +173,7 @@ class GeographicalMapChart{
                 .attr('offset', '1')
                 .attr('stop-color',"#cc0000");
 
-	        
+
 
 	        that.legendSvg.append('rect')
 	            .attr('x1', 0)
@@ -193,7 +193,7 @@ class GeographicalMapChart{
 	            .attr("transform", function(d, i) {  return "translate("+(200)+",15 )"; })
 	            .call(legendAxis)
 
-	        
+
 	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseover",function(d){
 	    		let tooltip_data = {"state":d.properties.name,"crimes":d3.format('.2f')(d.properties.value)}
 	    		that.infosvg.append("text").attr("x",0).attr("y",50).html(d.properties.name)
@@ -205,14 +205,14 @@ class GeographicalMapChart{
 	          	d3.select(this).style("stroke","white")
                 .style("stroke-width", 1);
 	          })
-	            
+
 
 
         };
-        
+
         choropleth();
-	    
-        
+
+
 	}
 
 

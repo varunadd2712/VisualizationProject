@@ -10,6 +10,7 @@ class VictimChart {
     this.svgWidth = 700;
     this.svgWidth2 = 900;
     this.svgHeight = 667;
+    this.unformattedData = null;
 
     //add the svg to the div
     this.totalVictimsSVG = victimChart.append("svg")
@@ -79,13 +80,17 @@ class VictimChart {
     return victimData;
   }
 
+  updateFromScript() {
+    this.update(this.unformattedData);
+  }
+
   update(unformattedData)
   {
-    console.log(unformattedData);
+    this.unformattedData = unformattedData;
     this.triggerVictimData(unformattedData[0].Victims, this.totalVictimsSVG, this.totalVictimsTextSVG, "data/Person.png", "hate");
     this.triggerVictimData(unformattedData[2].Victims, this.genderVictimsSVG, this.genderVictimsTextSVG, "data/Race.png", "racial");
-    this.triggerVictimData(unformattedData[12].Victims, this.religionVictimsSVG, this.religionVictimsTextSVG, "data/Religion.png", "anti-religion");
-    //this.triggerVictimData(unformattedData[36].Victims, this.orientationVictimsSVG, this.orientationVictimsTextSVG, "data/Gender.png", "anti-gender");
+    this.triggerVictimData(unformattedData[8].Victims, this.religionVictimsSVG, this.religionVictimsTextSVG, "data/Religion.png", "anti-religion");
+
   };
 
   triggerVictimData(victimString, figureSVG, figureText, imgScript, stringText) {

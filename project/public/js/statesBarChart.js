@@ -7,7 +7,7 @@ class StatesBarChart {
   constructor () {
     let divStateChart = d3.select("#states-bar-chart").classed("sideBar", true);
     this.svgBounds = divStateChart.node().getBoundingClientRect();
-
+    this.currentData = null;
     this.svgWidth = 750;
     this.svgHeight = 1500;
     this.padding = 25;
@@ -17,8 +17,14 @@ class StatesBarChart {
         .attr("width", this.svgWidth + 2*this.padding)
         .attr("height", this.svgHeight + 2*this.padding)
   };
+
+  updateFromScript() {
+	   this.update(this.currentData);
+	}
+
   update(data)
   {
+      this.currentData = data;
         //console.log(data);
         let array =[]
         for (let i =0;i< data.length;i++){

@@ -19,7 +19,7 @@ class Treemap {
   };
 
 
-  update(data, unformattedData)
+  update(data)
   {
 
     let root = d3.stratify()

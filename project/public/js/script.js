@@ -19,7 +19,6 @@ document.getElementById("chart").style.display = "none";
 
   function openDiv(evt, selectionName) {
 
-    console.log(evt);
     tablinks = document.getElementsByClassName("tablinks");
 
     for (i = 0; i < tablinks.length; i++) {
@@ -43,25 +42,17 @@ document.getElementById("chart").style.display = "none";
       document.getElementById("genderChart").style.display = "block";
       document.getElementById("religionChart").style.display = "block";
       document.getElementById("sexualOrientation").style.display = "block";
+      victimChart.updateFromScript();
     }
     else if (selectionName === "Map") {
       document.getElementById("geographical-map-chart").style.display = "block";
       document.getElementById("states-bar-chart").style.display = "block";
+      geographicalMapChart.updateFromScript();
+      statesBarChart.updateFromScript();
+
     }
     else if(selectionName === "Breakdown")
       document.getElementById("treemap-chart").style.display = "block";
     else if(selectionName === "StateCompare")
       document.getElementById("chart").style.display = "block";
-    /*
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-    */
 }

@@ -133,7 +133,7 @@ class DonutChart {
     	}
 
     update(data,data2) {
-    console.log(data["California"]);
+    //console.log(data["California"]);
     d3.select("#chart").selectAll("select").remove()
     let d=[[
         {axis:"Murder", value:0},
@@ -166,8 +166,8 @@ class DonutChart {
 
    //let colorscale = d3.scale.category10();
    let states=[]
-   for(let i=0;i<data.length;++i){
-   	states.push(data[i]["State"])
+   for(let i=0;i<data2.length;++i){
+   	states.push(data2[i]["STATE"])
    }
 
    let blueState = "Alabama"
@@ -183,7 +183,7 @@ class DonutChart {
                     redState = newCereal
                 	that.prepareDonut(blueState,redState,data,data2);};
 
-
+   //let textdrop1 = d3.select("#chart").append("text").text("State 1:") 
    let dropdown = d3.select("#chart").insert("select","svg").on("change", dropdownChange);
    let dropdown2 = d3.select("#chart").insert("select","svg").on("change", dropdownChange2);
 

@@ -133,7 +133,7 @@ class DonutChart {
     	}
 
     update(data,data2) {
-    console.log(data);
+    console.log(data["California"]);
     d3.select("#chart").selectAll("select").remove()
     let d=[[
         {axis:"Murder", value:0},

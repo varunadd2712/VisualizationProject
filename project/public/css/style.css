@@ -68,6 +68,11 @@ h1 {
     background-color: #ddd;
 }
 
+.circleVal:hover {
+  stroke: red;
+  stroke-width:2px;
+}
+
 /* Create an active/current tablink class */
 .tab button.active {
     background-color: #ccc;

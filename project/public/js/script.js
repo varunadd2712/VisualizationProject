@@ -6,12 +6,15 @@ document.getElementById("treemap-chart").style.display = "none";
 document.getElementById("geographical-map-chart").style.display = "none";
 document.getElementById("states-bar-chart").style.display = "none";
 document.getElementById("chart").style.display = "none";
+document.getElementById("trendchart").style.display = "none";
 
   let statesBarChart = new StatesBarChart();
   let geographicalMapChart = new GeographicalMapChart();
   let treemap = new Treemap();
   let donutChart = new DonutChart();
   let victimChart = new VictimChart();
+  let trendChart = new TrendChart();
+  trendChart.update();
 
   let yearChart = new YearChart(statesBarChart, geographicalMapChart, treemap, donutChart, victimChart);
   geographicalMapChart.drawMap()
@@ -53,6 +56,12 @@ document.getElementById("chart").style.display = "none";
     }
     else if(selectionName === "Breakdown")
       document.getElementById("treemap-chart").style.display = "block";
+
     else if(selectionName === "StateCompare")
       document.getElementById("chart").style.display = "block";
+
+    else if(selectionName === "trendchart") {
+      document.getElementById("trendchart").style.display = "block";
+      trendChart.update();
+    }
 }

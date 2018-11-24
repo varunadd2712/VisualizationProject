@@ -85,9 +85,23 @@ console.log(y);
       trendChart.update();
 
         //window.scrollTo(0, 0); // values are x,y-offset
-        stateOfScroll = 0;
+        stateOfScroll = 4;
         scrollToTop();
     }
+
+    else if(stateOfScroll == 4 && y >= 849) {
+
+        document.getElementById("trendchart").style.display = "none";
+
+        document.getElementById("victimsChart").style.display = "block";
+        document.getElementById("genderChart").style.display = "block";
+        document.getElementById("religionChart").style.display = "block";
+
+          //window.scrollTo(0, 0); // values are x,y-offset
+          stateOfScroll = 0;
+          victimChart.updateFromScript();
+          scrollToTop();
+      }
 /*
   if(y >= 2630) {
 

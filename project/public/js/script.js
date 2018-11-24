@@ -20,6 +20,7 @@ let victimChart = new VictimChart();
 let trendChart = new TrendChart();
 trendChart.update();
 
+var stateOfScroll = 0;
 var isStateShown = 0;
 var isStateComparisionShown = 0;
 var isTrendChartShown = 0;
@@ -32,21 +33,62 @@ yearChart.update();
 let myScrollFunc = function() {
 
   var y = window.scrollY;
-  console.log(y);
+console.log(y);
 
-  if(y >= 960) {
+  if(stateOfScroll == 0 && y >= 1081) {
 
-    if(isStateShown == 0) {
+      document.getElementById("victimsChart").style.display = "none";
+      document.getElementById("genderChart").style.display = "none";
+      document.getElementById("religionChart").style.display = "none";
+
       document.getElementById("map-text-chart").style.display = "block";
 
       document.getElementById("geographical-map-chart").style.display = "block";
       document.getElementById("states-bar-chart").style.display = "block";
       geographicalMapChart.updateFromScript();
       statesBarChart.updateFromScript();
-      isStateShown = 1;
-    }
+      //window.scrollTo(0, 0); // values are x,y-offset
+      stateOfScroll = 1;
+      scrollToTop();
+}
+
+
+  else if(stateOfScroll == 1 && y >= 914) {
+
+      document.getElementById("map-text-chart").style.display = "none";
+
+      document.getElementById("geographical-map-chart").style.display = "none";
+      document.getElementById("states-bar-chart").style.display = "none";
+
+      document.getElementById("chart").style.display = "block";
+
+      //window.scrollTo(0, 0); // values are x,y-offset
+      stateOfScroll = 2;
+      scrollToTop();
   }
 
+  else if(stateOfScroll == 2 && y >= 914) {
+
+    document.getElementById("chart").style.display = "none";
+    document.getElementById("treemap-chart").style.display = "block";
+    treemap.updateFromScript();
+
+      //window.scrollTo(0, 0); // values are x,y-offset
+      stateOfScroll = 3;
+      scrollToTop();
+  }
+
+  else if(stateOfScroll == 3 && y >= 138) {
+
+      document.getElementById("treemap-chart").style.display = "none";
+      document.getElementById("trendchart").style.display = "block";
+      trendChart.update();
+
+        //window.scrollTo(0, 0); // values are x,y-offset
+        stateOfScroll = 0;
+        scrollToTop();
+    }
+/*
   if(y >= 2630) {
 
     if(isStateComparisionShown == 0) {
@@ -71,7 +113,21 @@ let myScrollFunc = function() {
       trendChart.update();
       isTrendChartShown = 1;
     }
-  }
+  }*/
 }
 
+const scrollToTop = () => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 20);
+  }
+};
+
 window.addEventListener("scroll", myScrollFunc);
+/*$(window).scroll(function() {
+  console.log("calling");
+   if($(window).scrollTop() + $(window).height() == $(document).height()) {
+       alert("bottom!");
+   }
+});*/

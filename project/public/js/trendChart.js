@@ -8,9 +8,18 @@ class TrendChart {
     this.svgWidth = 700;
     this.svgWidth2 = 900;
     this.svgHeight = 667;
+    this.svgHeight2 = 100;
+
     this.currentData = null;
 
     //add the svg to the div
+
+        //add the svg to the div
+    this.trendChartTextSvg = divChart.append("svg")
+    .attr("width", this.svgWidth + this.svgWidth2)
+    .attr("height", this.svgHeight2)
+    .attr("id", "trendChartTextSvg");
+
     this.lineChartSvg = divChart.append("svg")
     .attr("width", this.svgWidth)
     .attr("height", this.svgHeight + 40)
@@ -43,6 +52,37 @@ class TrendChart {
   }
 
   update() {
+
+    let dataArray = [];
+    dataArray.push("singleString");
+    this.trendChartTextSvg.selectAll("g").remove();
+    let dataEnteredG = this.trendChartTextSvg.selectAll("g").data(dataArray);
+    dataEnteredG = dataEnteredG.enter().append("g");
+    let textBlock2 = this.trendChartTextSvg.append("g");
+
+    textBlock2.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Below are the trends of the crimes across the years")
+    .attr("y", (this.svgHeight2/2)-30)
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock2.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Click on a point to know more details.")
+    .attr("y", (this.svgHeight2/2))
+    .attr("class", "yeartext")
+    .attr("fill", "black")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
     let that = this;
     this.lineChartTextSvg.selectAll("g").remove();
     let textBlock = this.lineChartTextSvg.append("g");
@@ -144,7 +184,6 @@ class TrendChart {
       lineChartData.push({"Year":year, "Value":val});
     });
 
-    console.log(lineChartData);
 
     let valueline = d3.line()
     .x(function(d) { return xScale(d.Year); })
@@ -184,7 +223,6 @@ class TrendChart {
   }
 
   drawBarChart(year) {
-    console.log(year);
 
     let plotData;
 

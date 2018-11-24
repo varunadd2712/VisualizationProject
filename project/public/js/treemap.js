@@ -8,9 +8,16 @@ class Treemap {
   constructor () {
     let divMapChart = d3.select("#treemap-chart").classed("fullview", true);
     this.svgBounds = divMapChart.node().getBoundingClientRect();
-
+    this.currentData = null;
     this.svgWidth = 800;
+    this.svgWidth2 = 800;
     this.svgHeight = 667;
+    this.svgHeight2 = 100;
+
+    this.treemapTextSvg = divMapChart.append("svg")
+    .attr("width", this.svgWidth + this.svgWidth2)
+    .attr("height", this.svgHeight2)
+    .attr("id", "treemapTextSvg");
 
     this.treemapSVG = divMapChart.append("svg")
     .attr("width", this.svgWidth)
@@ -18,9 +25,45 @@ class Treemap {
     .attr("id", "treemapSVG");
   };
 
+  updateFromScript() {
+    console.log("triggered update");
+    this.update(this.currentData);
+  }
 
   update(data)
   {
+
+    console.log("triggered treemap");
+    this.currentData = data;
+    let dataArray = [];
+    dataArray.push("singleString");
+    this.treemapTextSvg.selectAll("g").remove();
+    let dataEnteredG = this.treemapTextSvg.selectAll("g").data(dataArray);
+    dataEnteredG = dataEnteredG.enter().append("g");
+    let textBlock = this.treemapTextSvg.append("g");
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Below is the split up of the crimes that occured")
+    .attr("y", (this.svgHeight2/2)-30)
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("The size is an indication of the percentage")
+    .attr("y", (this.svgHeight2/2))
+    .attr("class", "yeartext")
+    .attr("fill", "black")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
 
     let root = d3.stratify()
     .id(d => d.id)

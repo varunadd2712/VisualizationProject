@@ -3,11 +3,21 @@ class GeographicalMapChart{
 
 	constructor(){
 		let divMapChart = d3.select("#geographical-map-chart").classed("twoThirdView",true)
+		let maptextChart = d3.select('#map-text-chart').classed("fullView", true);
 		this.svgBounds = divMapChart.node().getBoundingClientRect();
+		this.svgBounds2 = maptextChart.node().getBoundingClientRect();
 
     	this.svgWidth = 800;
+			this.svgWidth2 = 800;
     	this.svgHeight = 667;
 			this.currentData = null;
+			this.svgHeight2 = 100;
+
+			    //add the svg to the div
+			this.maptextChartSvg = maptextChart.append("svg")
+			.attr("width", this.svgWidth + this.svgWidth2)
+			.attr("height", this.svgHeight2)
+			.attr("id", "maptextChartSvg");
 
 	    //add the svg to the div
 	    this.geoMapSVG = divMapChart.append("svg")
@@ -85,6 +95,36 @@ class GeographicalMapChart{
 
 		let that = this
 		that.currentData = data;
+
+		let dataArray = [];
+    dataArray.push("singleString");
+    this.maptextChartSvg.selectAll("g").remove();
+    let dataEnteredG = this.maptextChartSvg.selectAll("g").data(dataArray);
+    dataEnteredG = dataEnteredG.enter().append("g");
+    let textBlock = this.maptextChartSvg.append("g");
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("This chart shows the geographical distribution of the crimes")
+    .attr("y", (this.svgHeight2/2)-30)
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Hover on a state to know more of its details for that year")
+    .attr("y", (this.svgHeight2/2))
+    .attr("class", "yeartext")
+    .attr("fill", "black")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
 
 		async function choropleth() {
 

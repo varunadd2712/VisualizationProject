@@ -19,7 +19,7 @@ h1 {
 .yeartext {
     text-anchor: middle;
     font-size: 24px;
-    fill: #565656;
+    fill: black;
     stroke-width: 0.1px;
 }
 
@@ -82,6 +82,7 @@ h1 {
     display: inline-block;
     width: 85%;
     background-color: white;
+    position: fixed;
 }
 
 .twoThirdView{

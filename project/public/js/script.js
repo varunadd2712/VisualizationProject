@@ -1,12 +1,12 @@
-document.getElementById("victimsChart").style.display = "none";
-document.getElementById("genderChart").style.display = "none";
-document.getElementById("religionChart").style.display = "none";
-document.getElementById("treemap-chart").style.display = "none";
-document.getElementById("geographical-map-chart").style.display = "none";
-document.getElementById("states-bar-chart").style.display = "none";
-document.getElementById("chart").style.display = "none";
-document.getElementById("trendchart").style.display = "none";
-document.getElementById("map-text-chart").style.display = "none";
+document.getElementById("victimsChart").style.display = "block";
+document.getElementById("genderChart").style.display = "block";
+document.getElementById("religionChart").style.display = "block";
+document.getElementById("treemap-chart").style.display = "block";
+document.getElementById("geographical-map-chart").style.display = "block";
+document.getElementById("states-bar-chart").style.display = "block";
+document.getElementById("chart").style.display = "block";
+document.getElementById("trendchart").style.display = "block";
+document.getElementById("map-text-chart").style.display = "block";
 
 document.getElementById("victimsChart").style.display = "block";
 document.getElementById("genderChart").style.display = "block";
@@ -35,7 +35,7 @@ let myScrollFunc = function() {
   var y = window.scrollY;
 console.log(y);
 
-  if(stateOfScroll == 0 && y >= 1081) {
+  /*if(stateOfScroll == 0 && y >= 1081) {
 
       document.getElementById("victimsChart").style.display = "none";
       document.getElementById("genderChart").style.display = "none";
@@ -138,7 +138,7 @@ const scrollToTop = () => {
   }
 };
 
-window.addEventListener("scroll", myScrollFunc);
+//window.addEventListener("scroll", myScrollFunc);
 /*$(window).scroll(function() {
   console.log("calling");
    if($(window).scrollTop() + $(window).height() == $(document).height()) {

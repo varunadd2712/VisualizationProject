@@ -16,7 +16,7 @@ class DonutChart {
 
     this.donutSVG = divDonutChart.append("svg").attr("width",750).attr("height",500).classed("sideBar",true)
 
-    
+
 
     };
 
@@ -28,7 +28,7 @@ class DonutChart {
   		for(let i=0;i<data_pop.length;++i){
   			sum += parseInt(data_pop[i]["TOTAL_OFFENSES"])/parseInt(data_pop[i]["POPULATION"])
   			if(data_pop[i]["STATE"]== blueState)
-  				prop_blue = data_pop[i]["TOTAL_OFFENSES"]/parseInt(data_pop[i]["POPULATION"]) 
+  				prop_blue = data_pop[i]["TOTAL_OFFENSES"]/parseInt(data_pop[i]["POPULATION"])
   			if(data_pop[i]["STATE"]== redState)
   				prop_red = data_pop[i]["TOTAL_OFFENSES"]/parseInt(data_pop[i]["POPULATION"])
   		}
@@ -48,17 +48,17 @@ class DonutChart {
 	    let anglesRange = 0.5 * Math.PI
 	    let radis = Math.min(width, 2 * height) / 2
 	    var thickness = 100
-	    // Utility 
+	    // Utility
 	//     var colors = d3.scale.category10();
 	    var colors1 = ["#5EBBF8", "#F5F5F5"]
 	    var colors2 = ["#CC0000", "#F5F5F5"]
-	    
+
 	    var pies = d3.pie()
 	    	.value( d => d)
 	    	.sort(null)
 	    	.startAngle( anglesRange * -1)
 	    	.endAngle( anglesRange)
-	    
+
 			var arc = d3.arc()
 	    	.outerRadius(radis)
 	    	.innerRadius(radis/2)
@@ -68,15 +68,15 @@ class DonutChart {
 	    	.sort(null)
 	    	.startAngle( anglesRange * -1)
 	    	.endAngle( anglesRange)
-	    
+
 			var arc = d3.arc()
 	    	.outerRadius(radis)
 	    	.innerRadius(radis/2)
-	    
+
 	    let translation = (x, y) => `translate(${x}, ${y})`
 
 
-	    	
+
 	    // Feel free to change or delete any of the code you see in this editor!
 	   	this.donutSVG.selectAll("g").remove()
 	    let svg = this.donutSVG
@@ -88,16 +88,16 @@ class DonutChart {
 	    	//.attr("class", "half-donut")
 			.append("g")
 	    	.attr("transform", translation(width / 2 +250, height))
-	    
-	    
+
+
 	    svg.selectAll("path")
 	    	.data(pies(data1))
 	    	.enter()
 	    	.append("path")
 	    	.attr("fill", (d, i) => colors1[i])
 	    	.attr("d", arc)
-	    	
-	    
+
+
 		svg.append("text")
 	    	.text( d => text1)
 	    	.attr("dy", "0rem")
@@ -122,8 +122,8 @@ class DonutChart {
 	    	.attr("dy", "2rem")
 	    	.attr("class", "label")
 	    	.attr("text-anchor","middle")
-	    	
-	    
+
+
 		svg2.append("text")
 	    	.text( d => text2)
 	    	.attr("dy", "0rem")
@@ -183,7 +183,7 @@ class DonutChart {
                     redState = newCereal
                 	that.prepareDonut(blueState,redState,data,data2);};
 
-   //let textdrop1 = d3.select("#chart").append("text").text("State 1:") 
+   //let textdrop1 = d3.select("#chart").append("text").text("State 1:")
    let dropdown = d3.select("#chart").insert("select","svg").on("change", dropdownChange);
    let dropdown2 = d3.select("#chart").insert("select","svg").on("change", dropdownChange2);
 

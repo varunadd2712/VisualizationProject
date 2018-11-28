@@ -80,7 +80,7 @@ h1 {
 
 .year-chart{
     display: inline-block;
-    width: 85%;
+    width: 100%;
     background-color: white;
     position: fixed;
 }

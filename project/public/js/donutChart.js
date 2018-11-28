@@ -4,7 +4,7 @@ class DonutChart {
     constructor() {
     let divDonutChart = d3.select("#chart");
     let donutAndDropdown = d3.select("#donutAndDropdown").classed("sideBarLeft", true);
-    let dropdownDiv = d3.select("#dropdownDiv").classed("fullView", true);
+    let dropdownDiv = d3.select("#dropdownDiv").classed("sideBarLeft", true);
     this.svgBounds = divDonutChart.node().getBoundingClientRect();
 
     this.svgWidth = 750;

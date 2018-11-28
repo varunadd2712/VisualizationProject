@@ -4,9 +4,12 @@ import sys
 
 year = sys.argv[1]
 data = pd.read_csv("Table11_"+year+".csv")
-
+if int(year) <=2011:
+	start=0
+else:
+	start=1
 main_dict={}
-for i in xrange(1,len(data)):
+for i in xrange(start,len(data)):
 	main_dict[data["State"][i]]=[]
 	total = float(data["Total offenses"][i])
 	if total==0:

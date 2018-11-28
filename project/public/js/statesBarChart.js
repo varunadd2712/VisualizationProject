@@ -24,7 +24,9 @@ class StatesBarChart {
 
   update(data)
   {
-      this.currentData = data;
+        let that =this;
+        let ndata =data;
+        this.currentData = data;
         //console.log(data);
         let array =[]
         for (let i =0;i< data.length;i++){
@@ -93,13 +95,35 @@ class StatesBarChart {
                          .attr("y", 0)
                          .attr("dy","1.2em")
                          .text("Number of crimes per million of the population");
+           var flag =0
+           labelX.on("click",function(){
+           if (data[0].STATE == "Alabama"){
+           data = data.sort(function(a,b){
+                    return xScale((b.TOTAL_OFFENSES * 1000000)/b.POPULATION) - xScale((a.TOTAL_OFFENSES * 1000000)/a.POPULATION);
+                })
+                flag =1
+                that.update(data);}
+           else{
+           console.log("daifeownfownfonw");
+           data = data.sort(function(a, b){
+                  if(a.STATE < b.STATE) { return -1; }
+                    if(a.STATE > b.STATE) { return 1; }
+                    return 0;
+})  
+           that.update(data);
+           }
+
+
+
+            });
 
        let Xaxis=  this.svg.append("g")
         // css class for the axis
             //.classed("axis", true)
             // moving the axis to the right place
             .attr("transform", "translate(" + this.padding + "," + this.padding*2 + ")")
-            .call(xAxis);
+            .call(xAxis)
+            ;
 
        let Yaxis=  this.svg.append("g")
         // css class for the axis

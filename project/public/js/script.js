@@ -1,12 +1,14 @@
-document.getElementById("victimsChart").style.display = "block";
-document.getElementById("genderChart").style.display = "block";
-document.getElementById("religionChart").style.display = "block";
-document.getElementById("treemap-chart").style.display = "block";
-document.getElementById("geographical-map-chart").style.display = "block";
-document.getElementById("states-bar-chart").style.display = "block";
-document.getElementById("chart").style.display = "block";
-document.getElementById("trendchart").style.display = "block";
-document.getElementById("map-text-chart").style.display = "block";
+document.getElementById("victimsChart").style.display = "none";
+document.getElementById("genderChart").style.display = "none";
+document.getElementById("religionChart").style.display = "none";
+document.getElementById("treemap-chart").style.display = "none";
+document.getElementById("geographical-map-chart").style.display = "none";
+document.getElementById("states-bar-chart").style.display = "none";
+document.getElementById("chart").style.display = "none";
+document.getElementById("trendchart").style.display = "none";
+document.getElementById("map-text-chart").style.display = "none";
+document.getElementById("dropdownDiv").style.display = "none";
+document.getElementById("donutAndDropdown").style.display = "none";
 
 document.getElementById("victimsChart").style.display = "block";
 document.getElementById("genderChart").style.display = "block";
@@ -34,8 +36,15 @@ let myScrollFunc = function() {
 
   var y = window.scrollY;
 console.log(y);
+let windowEnd = document.body.offsetHeight - window.innerHeight + 10;
+console.log(document.body.scrollHeight);
+console.log(document.body.offsetHeight - window.innerHeight);
+console.log(window.scrollMaxY);
 
-  /*if(stateOfScroll == 0 && y >= 1081) {
+  if(stateOfScroll == 0 && y >= windowEnd) {
+
+      console.log("first block");
+      document.getElementById("trendchart").style.display = "none";
 
       document.getElementById("victimsChart").style.display = "none";
       document.getElementById("genderChart").style.display = "none";
@@ -53,13 +62,18 @@ console.log(y);
 }
 
 
-  else if(stateOfScroll == 1 && y >= 914) {
+  else if(stateOfScroll == 1 && y >= windowEnd) {
+
+    console.log("second block");
 
       document.getElementById("map-text-chart").style.display = "none";
 
       document.getElementById("geographical-map-chart").style.display = "none";
       document.getElementById("states-bar-chart").style.display = "none";
 
+
+      document.getElementById("dropdownDiv").style.display = "block";
+      document.getElementById("donutAndDropdown").style.display = "block";
       document.getElementById("chart").style.display = "block";
 
       //window.scrollTo(0, 0); // values are x,y-offset
@@ -67,8 +81,12 @@ console.log(y);
       scrollToTop();
   }
 
-  else if(stateOfScroll == 2 && y >= 914) {
+  else if(stateOfScroll == 2 && y >= windowEnd) {
 
+    console.log("third block");
+
+ document.getElementById("dropdownDiv").style.display = "none";
+  document.getElementById("donutAndDropdown").style.display = "none";
     document.getElementById("chart").style.display = "none";
     document.getElementById("treemap-chart").style.display = "block";
     treemap.updateFromScript();
@@ -78,8 +96,9 @@ console.log(y);
       scrollToTop();
   }
 
-  else if(stateOfScroll == 3 && y >= 138) {
+  else if(stateOfScroll == 3 && y >= windowEnd) {
 
+    console.log("fourth block");
       document.getElementById("treemap-chart").style.display = "none";
       document.getElementById("trendchart").style.display = "block";
       trendChart.update();
@@ -89,7 +108,10 @@ console.log(y);
         scrollToTop();
     }
 
-    else if(stateOfScroll == 4 && y >= 849) {
+    else if(stateOfScroll == 4 && y >= windowEnd) {
+
+          console.log("fifth block");
+
 
         document.getElementById("trendchart").style.display = "none";
 
@@ -102,32 +124,6 @@ console.log(y);
           victimChart.updateFromScript();
           scrollToTop();
       }
-/*
-  if(y >= 2630) {
-
-    if(isStateComparisionShown == 0) {
-      document.getElementById("chart").style.display = "block";
-      isStateComparisionShown = 1;
-    }
-  }
-
-  if(y >= 4240) {
-
-    if(isTreeMapShown == 0) {
-      document.getElementById("treemap-chart").style.display = "block";
-      treemap.updateFromScript();
-      isTreeMapShown = 1;
-    }
-  }
-
-  if(y >= 5018) {
-
-    if(isTrendChartShown == 0) {
-      document.getElementById("trendchart").style.display = "block";
-      trendChart.update();
-      isTrendChartShown = 1;
-    }
-  }*/
 }
 
 const scrollToTop = () => {
@@ -138,7 +134,7 @@ const scrollToTop = () => {
   }
 };
 
-//window.addEventListener("scroll", myScrollFunc);
+window.addEventListener("scroll", myScrollFunc);
 /*$(window).scroll(function() {
   console.log("calling");
    if($(window).scrollTop() + $(window).height() == $(document).height()) {

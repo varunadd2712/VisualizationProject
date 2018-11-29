@@ -32,9 +32,20 @@ h1 {
   margin-left: 350px;
 }
 
-.fullView{
+.fullView {
     display: inline-block;
     width: 100%;
+}
+
+.fullView {
+    display: inline-block;
+    width: 100%;
+}
+
+.hidden {
+    display: inline-block;
+    width: 100%;
+    opacity: 0.2;
 }
 
 .fullViewWithBorder{

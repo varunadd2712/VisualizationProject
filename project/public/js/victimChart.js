@@ -5,6 +5,7 @@ class VictimChart {
   */
   constructor () {
     let victimChart = d3.select("#victimsChart").classed("fullView", true);
+
     this.svgBounds = victimChart.node().getBoundingClientRect();
 
     this.svgWidth = 700;

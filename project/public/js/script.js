@@ -1,23 +1,25 @@
-document.getElementById("victimsChart").style.display = "none";
-document.getElementById("genderChart").style.display = "none";
-document.getElementById("religionChart").style.display = "none";
-document.getElementById("treemap-chart").style.display = "none";
-document.getElementById("geographical-map-chart").style.display = "none";
-document.getElementById("states-bar-chart").style.display = "none";
-document.getElementById("chart").style.display = "none";
-document.getElementById("trendchart").style.display = "none";
-document.getElementById("newchart").style.display = "none";
-
-document.getElementById("map-text-chart").style.display = "none";
-document.getElementById("dropdownDiv").style.display = "none";
-document.getElementById("donutAndDropdown").style.display = "none";
-
+document.getElementById("victimsChart").style.display = "block";
+document.getElementById("genderChart").style.display = "block";
+document.getElementById("religionChart").style.display = "block";
+document.getElementById("treemap-chart").style.display = "block";
+document.getElementById("geographical-map-chart").style.display = "block";
+document.getElementById("states-bar-chart").style.display = "block";
+document.getElementById("chart").style.display = "block";
+document.getElementById("trendchart").style.display = "block";
+document.getElementById("newchart").style.display = "block";
+document.getElementById("map-text-chart").style.display = "block";
+document.getElementById("dropdownDiv").style.display = "block";
+document.getElementById("donutAndDropdown").style.display = "block";
 document.getElementById("victimsChart").style.display = "block";
 document.getElementById("genderChart").style.display = "block";
 document.getElementById("religionChart").style.display = "block";
 
 flag_map=true
 flag_bar=true
+
+let victimChartDiv = document.getElementById('victimsChart').getBoundingClientRect();
+console.log(victimChartDiv.top);
+
 function updateLinksMap(stateName,crimes){
   geographicalMapChart.updateLinks(stateName,crimes,flag_map)
   if(flag_map==true) flag_map==false
@@ -152,7 +154,7 @@ const scrollToTop = () => {
   }
 };
 
-window.addEventListener("scroll", myScrollFunc);
+//window.addEventListener("scroll", myScrollFunc);
 /*$(window).scroll(function() {
 console.log("calling");
 if($(window).scrollTop() + $(window).height() == $(document).height()) {

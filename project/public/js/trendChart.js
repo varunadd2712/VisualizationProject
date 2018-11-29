@@ -32,7 +32,7 @@ class TrendChart {
 
     this.vulnerableChartSvg = divChart.append("svg")
     .attr("width", this.svgWidth)
-    .attr("height", this.svgHeight)
+    .attr("height", this.svgHeight+900)
     .attr("id", "vulnerableChartSvg");
 
     this.vulnerableTextSvg = divChart.append("svg")
@@ -496,135 +496,165 @@ class TrendChart {
     .attr("class", function(d, i) {
       return "circleVal";
     }).on("click", function(d) {
-      that.drawBarChart(d);
+      that.drawBarChart([d]);
     });
+
+    let brush = d3.brush().extent([[0, 0],[this.svgWidth, this.svgHeight]]).on("brush end", brushed);
+    this.lineChartSvg.append("g").attr("class", "brush").call(brush);
+       that = this
+       function brushed(){
+         let [x1,y1] = d3.event.selection[0]
+         let [x2,y2] = d3.event.selection[1]
+         let selectedYears = []
+         for(let i=0; i<=yData.length;++i){
+            if(xScale(xData[i])>=x1 -80&& xScale(xData[i])<=x2-80){
+                if(yScale(yData[i])>=y1+30&&yScale(yData[i])<=y2+30){
+                    selectedYears.push(xData[i])    
+                }
+            }  
+         }
+         console.log(selectedYears)
+         that.drawBarChart(selectedYears)
+         // that.trendChart.update(selectedYears)
+
+       }
   }
 
-  drawBarChart(year) {
 
-    let plotData;
-
-    if(year == 2008)
-    plotData = this.vulnerable2008;
-
-    else if(year == 2009)
-    plotData = this.vulnerable2009;
-
-    else if(year == 2010)
-    plotData = this.vulnerable2010;
-
-    else if(year == 2011)
-    plotData = this.vulnerable2011;
-
-    else if(year == 2012)
-    plotData = this.vulnerable2012;
-
-    else if(year == 2013)
-    plotData = this.vulnerable2013;
-
-    else if(year == 2014)
-    plotData = this.vulnerable2014;
-
-    else if(year == 2015)
-    plotData = this.vulnerable2015;
-
-    else if(year == 2016)
-    plotData = this.vulnerable2016;
+  drawBarChart(selectedyear) {
 
 
     let xScale = d3.scaleLinear()
-    .domain([504, 3413])
-    .range([0, this.svgWidth-100])
-    .nice();
+      .domain([504, 3413])
+      .range([0, this.svgWidth-100])
+      .nice();
 
     let yScale = d3.scaleLinear()
-    .domain([0, 10])
-    .range([160, this.svgHeight-10])
-    .nice();
+      .domain([0, 35])
+      .range([160, this.svgHeight+900])
+      .nice();
 
     let xAxis = d3.axisBottom();
-    xAxis.scale(xScale).tickFormat(d3.format("d"));
+      xAxis.scale(xScale).tickFormat(d3.format("d"));
 
     let yAxis = d3.axisLeft();
-    yAxis.scale(yScale).ticks(0);
+      yAxis.scale(yScale).ticks(0);
 
-    this.vulnerableChartSvg.select(".yAxis").remove();
-    this.vulnerableChartSvg.select(".xAxis").remove();
-    this.vulnerableChartSvg.selectAll("text").remove();
+      this.vulnerableChartSvg.select(".yAxis").remove();
+      this.vulnerableChartSvg.select(".xAxis").remove();
+      this.vulnerableChartSvg.selectAll("text").remove();
 
-    this.vulnerableChartSvg.selectAll("g").remove();
-
-    let xTranslate = 20;
+      this.vulnerableChartSvg.selectAll("g").remove();
 
 
-    let yAxisElement = this.vulnerableChartSvg.insert("g",":first-child").classed("axis", true)
-    .attr("transform", "translate(" + "" + 80 + "," + -150 + ")")
-    .attr("class", "yAxis")
-    .call(yAxis);
-
-    let xAxisElement = this.vulnerableChartSvg.insert("g",":first-child").classed("axis", true)
-    .attr("transform", "translate(" + "" + 80 + "," + xTranslate  + ")")
-    .attr("class", "xAxis")
-    .call(xAxis);
-
-    this.vulnerableChartSvg.append("text")
-    .attr("transform", "translate(" + 400 + " ," + (xTranslate - 5) + ")")
-    .style("text-anchor", "middle")
-    .attr("class", "axis-label")
-    .text("Number of crimes");
-
-    this.vulnerableChartSvg.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("y", 30)
-    .attr("x",-300)
-    .attr("dy", "1em")
-    .style("text-anchor", "middle")
-    .attr("class", "axis-label")
-    .text("Vulnerable Group");
-
-    let yTranslate = this.svgHeight - 30;
-
-    let gElement = this.vulnerableChartSvg.append("g").attr("transform", "translate(" + "" + 80 + "," + -30 + ")");
-
-    let newScatter = gElement.selectAll("rect").data(plotData)
-    .enter()
-    .append("rect");
-
-    newScatter.attr("x", function(d, i) {
-      return 0;
-    })
-    .attr("y", function(d, i) {
-      return yScale(i);
-    })
-    .attr("height", function(d, i) {
-      return 20;
-    }).attr("fill", function(d, i) {
-      if(i == 0)
-      return "red";
-      if(i == 1)
-      return "brown";
-      if(i == 2)
-      return "orange";
-    }).attr("width", 0)
-    .transition()
-    .duration(4000)
-    .attr("width", function(d, i) {
-      return xScale(d.value);
-    });
-
-    gElement.selectAll("text")
-    .data(plotData)
-    .enter()
-    .append("text")
-    .attr("transform", "translate(" + "" + 80 + "," + -30 + ")")
-    .attr("x", -70)
-    .attr("y",(d, i) => yScale(i) + 5)
-    .attr("dy","1.2em")
-    .text(function(d){
-      return d.group;
-    });
+      let xTranslate = 20;
 
 
+      let yAxisElement = this.vulnerableChartSvg.insert("g",":first-child").classed("axis", true)
+      .attr("transform", "translate(" + "" + 80 + "," + -150 + ")")
+      .attr("class", "yAxis")
+      .call(yAxis);
+
+      let xAxisElement = this.vulnerableChartSvg.insert("g",":first-child").classed("axis", true)
+      .attr("transform", "translate(" + "" + 80 + "," + xTranslate  + ")")
+      .attr("class", "xAxis")
+      .call(xAxis);
+
+       this.vulnerableChartSvg.append("text")
+          .attr("transform", "translate(" + 400 + " ," + (xTranslate - 5) + ")")
+          .style("text-anchor", "middle")
+          .attr("class", "axis-label")
+          .text("Number of crimes");
+
+        this.vulnerableChartSvg.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 30)
+          .attr("x",-300)
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .attr("class", "axis-label")
+          .text("Vulnerable Group");
+
+    let plotData;
+    for(let i=0;i<selectedyear.length;++i){
+        let year = selectedyear[i]
+        if(year == 2008)
+          plotData = this.vulnerable2008;
+
+        else if(year == 2009)
+          plotData = this.vulnerable2009;
+
+        else if(year == 2010)
+          plotData = this.vulnerable2010;
+
+        else if(year == 2011)
+          plotData = this.vulnerable2011;
+
+        else if(year == 2012)
+          plotData = this.vulnerable2012;
+
+        else if(year == 2013)
+          plotData = this.vulnerable2013;
+
+        else if(year == 2014)
+          plotData = this.vulnerable2014;
+
+        else if(year == 2015)
+          plotData = this.vulnerable2015;
+
+        else if(year == 2016)
+          plotData = this.vulnerable2016;
+
+          let yTranslate = this.svgHeight - 30;
+
+          let gElement = this.vulnerableChartSvg.append("g").attr("transform", "translate(" + "" + 80 + "," + (-30+i*150) + ")");
+
+          let newScatter = gElement.selectAll("rect").data(plotData)
+          .enter()
+          .append("rect");
+
+          newScatter.attr("x", function(d, i) {
+            return 0;
+          })
+          .attr("y", function(d, i) {
+            return yScale(i);
+          })
+          .attr("height", function(d, i) {
+            return 20;
+          }).attr("fill", function(d, i) {
+            if(i == 0)
+              return "red";
+            if(i == 1)
+              return "brown";
+            if(i == 2)
+              return "orange";
+          }).attr("width", 0)
+          .transition()
+          .duration(4000)
+          .attr("width", function(d, i) {
+            return xScale(d.value);
+          });
+
+          gElement.selectAll("text")
+                .data(plotData)
+                .enter()
+                .append("text")
+                .attr("transform", "translate(" + "" + 80 + "," + -30 + ")")
+                .attr("x", -70)
+                .attr("y",(d, i) => yScale(i) + 5)
+                .attr("dy","1.2em")
+                .text(function(d){
+                  return d.group;
+                });
+
+          this.vulnerableChartSvg.append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 70)
+          .attr("x",-200 - i*150)
+          .attr("class", "axis-label")
+          .text(selectedyear[i]);
+
+    }
 
     this.vulnerableTextSvg.selectAll("g").remove();
     let textBlock = this.vulnerableTextSvg.append("g");

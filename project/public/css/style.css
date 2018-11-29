@@ -280,3 +280,25 @@ h3{
       font-size: 1.5rem;
       font-family: "Arial Black";
 }
+
+path.spiral {
+        fill: none;
+        stroke: #ee8d18;
+        stroke-width: 3px;
+      }
+
+
+.tooltip {
+    background: #eee;
+    box-shadow: 0 0 5px #999999;
+    color: #333;
+    font-size: 12px;
+    left: 130px;
+    padding: 10px;
+    position: absolute;
+    text-align: center;
+    top: 95px;
+    z-index: 10;
+    display: block;
+    opacity: 0;
+}

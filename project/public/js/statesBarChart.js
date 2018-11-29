@@ -109,7 +109,7 @@ class StatesBarChart {
                   if(a.STATE < b.STATE) { return -1; }
                     if(a.STATE > b.STATE) { return 1; }
                     return 0;
-})  
+})
            that.update(data);
            }
 

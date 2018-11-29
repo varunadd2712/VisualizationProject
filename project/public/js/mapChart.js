@@ -1,11 +1,12 @@
 
 class GeographicalMapChart{
 
-	constructor(){
+	constructor(updateLinksBar){
 		let divMapChart = d3.select("#geographical-map-chart").classed("twoThirdView",true)
 		let maptextChart = d3.select('#map-text-chart').classed("fullView", true);
 		this.svgBounds = divMapChart.node().getBoundingClientRect();
 		this.svgBounds2 = maptextChart.node().getBoundingClientRect();
+        this.updateLinksBar = updateLinksBar
 
     	this.svgWidth = 800;
 			this.svgWidth2 = 800;
@@ -172,10 +173,12 @@ class GeographicalMapChart{
             // Bind data and create one path per GeoJSON feature
             d3.select("#mapLayer").remove()
             that.geoMapSVG.append("g").attr("id","mapLayer")
+
             let allstates =d3.select("#mapLayer").selectAll("path")
                 .data(json.features)
                 .enter()
                 .append("path")
+                .attr("id", d=>d.properties.name.split(' ').join(''))
                 .style("fill","white")
                 .transition()
                 .duration(3000)
@@ -233,20 +236,20 @@ class GeographicalMapChart{
 	            .attr("transform", function(d, i) {  return "translate("+(200)+",15 )"; })
 	            .call(legendAxis)
 
-
+            let updbar = that.updateLinksBar
 	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseover",function(d){
 	    		let tooltip_data = {"state":d.properties.name,"crimes":d3.format('.2f')(d.properties.value)}
 	    		that.infosvg.append("text").attr("x",0).attr("y",50).html(d.properties.name)
 	    		that.infosvg.append("text").attr("x",0).attr("y",75).html("Crime per million: " + tooltip_data["crimes"])
 	    		d3.select(this).style("stroke","white").style("stroke-width",4)
+                updbar(tooltip_data.state)
 	    	})
 	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseout",function(d){
 	          	that.infosvg.selectAll("text").remove()
 	          	d3.select(this).style("stroke","white")
                 .style("stroke-width", 1);
+                updbar("Remove")
 	          })
-
-
 
         };
 
@@ -254,6 +257,21 @@ class GeographicalMapChart{
 
 
 	}
+
+    updateLinks(stateName,crimes,flag){
+        if(stateName=="Remove"){
+            this.geoMapSVG.selectAll("path").style("stroke","white").style("stroke-width", 1);
+            this.infosvg.selectAll("text").remove()
+        }
+        else{
+            this.geoMapSVG.select("path#"+stateName.split(' ').join('')).style("stroke","white").style("stroke-width",4)
+            let paths = this.geoMapSVG.select("path#"+stateName)
+            this.infosvg.append("text").attr("x",0).attr("y",50).html(stateName)
+            this.infosvg.append("text").attr("x",0).attr("y",75).html("Crime per million: " + crimes)
+            
+        }
+
+    }
 
 
 

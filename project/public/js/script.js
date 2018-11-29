@@ -14,8 +14,23 @@ document.getElementById("victimsChart").style.display = "block";
 document.getElementById("genderChart").style.display = "block";
 document.getElementById("religionChart").style.display = "block";
 
-let statesBarChart = new StatesBarChart();
-let geographicalMapChart = new GeographicalMapChart();
+flag_map=true
+flag_bar=true
+function updateLinksMap(stateName,crimes){
+  geographicalMapChart.updateLinks(stateName,crimes,flag_map)
+  if(flag_map==true) flag_map==false
+  else flag_map==true
+}
+
+function updateLinksBar(stateName){
+  statesBarChart.updateLinks(stateName,flag_bar)
+  if(flag_bar==true) flag_bar==false
+  else flag_bar==true
+}
+
+let statesBarChart = new StatesBarChart(updateLinksMap);
+let geographicalMapChart = new GeographicalMapChart(updateLinksBar);
+
 let treemap = new Treemap();
 let donutChart = new DonutChart();
 let victimChart = new VictimChart();

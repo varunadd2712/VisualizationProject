@@ -4,13 +4,14 @@ class StatesBarChart {
    * Constructor for the Year Chart
    * Pass objects of the other charts here.
    */
-  constructor () {
+  constructor (updateMapfunc) {
     let divStateChart = d3.select("#states-bar-chart").classed("sideBar", true);
     this.svgBounds = divStateChart.node().getBoundingClientRect();
     this.currentData = null;
     this.svgWidth = 750;
     this.svgHeight = 1500;
     this.padding = 25;
+    this.updateMapfunc = updateMapfunc
 
     //add the svg to the div
     this.svg = divStateChart.append("svg")
@@ -66,6 +67,7 @@ class StatesBarChart {
             .data(data)
             .enter()
             .append("rect")
+            .attr("id",d=>d.STATE.split(' ').join(''))
             //.classed("bar", true)
             // new: we add the padding via a tranform/translate
             .attr("transform", "translate(" + this.padding + "," + this.padding + ")")
@@ -76,7 +78,8 @@ class StatesBarChart {
             .transition().duration(3000)
             .attr("width", d => xScale((d.TOTAL_OFFENSES * 1000000)/d.POPULATION))
             .attr("height", 20)
-            .style("fill", "red");
+            .style("fill", "red")
+
 
        let stateName = gRect.selectAll("text")
                             .data(data)
@@ -109,7 +112,7 @@ class StatesBarChart {
                   if(a.STATE < b.STATE) { return -1; }
                     if(a.STATE > b.STATE) { return 1; }
                     return 0;
-})
+})  
            that.update(data);
            }
 
@@ -132,6 +135,26 @@ class StatesBarChart {
             .attr("transform", "translate(" + this.padding + "," + this.padding*2 + ")")
             .call(yAxis);
 
+        this.svg.selectAll("rect").on("mouseover",function(d){
+          that.svg.select("rect#"+d.STATE.split(' ').join('')).style("fill","#8b0000");
+          let crimes = (d.TOTAL_OFFENSES * 1000000)/d.POPULATION
+          that.updateMapfunc(d.STATE,crimes)
+      });
+      
+        this.svg.selectAll("rect").on("mouseout",function(d){
+          console.log("Hello")
+          that.svg.selectAll("rect").style("fill","red") 
+          that.updateMapfunc("Remove",0)
+      });
 
   };
+
+  updateLinks(stateName,flag){
+    if(stateName=="Remove"){
+        this.svg.selectAll("rect").style("fill","red")  
+    }
+    else{
+        this.svg.select("rect#"+stateName.split(' ').join('')).style("fill","#8b0000")
+    }
+  }
 };

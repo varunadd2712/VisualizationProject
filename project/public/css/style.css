@@ -28,6 +28,10 @@ h1 {
     stroke-width: 4;
 }
 
+.center {
+  margin-left: 350px;
+}
+
 .fullView{
     display: inline-block;
     width: 100%;

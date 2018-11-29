@@ -6,6 +6,8 @@ document.getElementById("geographical-map-chart").style.display = "none";
 document.getElementById("states-bar-chart").style.display = "none";
 document.getElementById("chart").style.display = "none";
 document.getElementById("trendchart").style.display = "none";
+document.getElementById("newchart").style.display = "none";
+
 document.getElementById("map-text-chart").style.display = "none";
 document.getElementById("dropdownDiv").style.display = "none";
 document.getElementById("donutAndDropdown").style.display = "none";
@@ -106,6 +108,8 @@ let myScrollFunc = function() {
     console.log("fourth block");
     document.getElementById("treemap-chart").style.display = "none";
     document.getElementById("trendchart").style.display = "block";
+    document.getElementById("newchart").style.display = "block";
+
     trendChart.update();
 
     //window.scrollTo(0, 0); // values are x,y-offset
@@ -121,6 +125,7 @@ let myScrollFunc = function() {
 
 
     document.getElementById("trendchart").style.display = "none";
+    document.getElementById("newchart").style.display = "none";
 
     document.getElementById("victimsChart").style.display = "block";
     document.getElementById("genderChart").style.display = "block";

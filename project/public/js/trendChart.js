@@ -2,7 +2,7 @@ class TrendChart {
 
   constructor () {
     let divChart = d3.select("#trendchart").classed("fullView", true);
-    let divChart2 = d3.select("#newchart").classed("fullView", true);
+    let divChart2 = d3.select("#newchart").classed("center", true);
     this.svgBounds = divChart.node().getBoundingClientRect();
 
     this.svgWidth = 700;
@@ -85,7 +85,8 @@ class TrendChart {
     let radius = d3.scaleLinear()
     .domain([start, end])
     .range([40, r]);
-
+    d3.select("#newchart").selectAll("svg").remove();
+    d3.select("#newchart").selectAll("div").remove();
     let svg = d3.select("#newchart").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.left + margin.right)

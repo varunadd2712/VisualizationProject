@@ -14,6 +14,7 @@ document.getElementById("victimsChart").style.display = "none";
 document.getElementById("genderChart").style.display = "none";
 document.getElementById("religionChart").style.display = "none";
 document.getElementById("year-chart").style.display = "none";
+document.getElementById("newchartText").style.display = "block";
 
 
 flag_map=true
@@ -64,12 +65,14 @@ function openDiv(evt, selectionName) {
 
      if(selectionName === "Summary") {
        document.getElementById("year-chart").style.display = "none";
+       document.getElementById("newchartText").style.display = "block";
        document.getElementById("newchart").style.display = "block";
        document.getElementById("trendchart").style.display = "block";
        trendChart.update();
      }
 
     else if (selectionName === "Map") {
+      document.getElementById("map-text-chart").style.display = "block";
       document.getElementById("year-chart").style.display = "block";
       document.getElementById("geographical-map-chart").style.display = "block";
       document.getElementById("states-bar-chart").style.display = "block";
@@ -236,6 +239,7 @@ function noneAll() {
   document.getElementById("victimsChart").style.display = "none";
   document.getElementById("genderChart").style.display = "none";
   document.getElementById("religionChart").style.display = "none"
+  document.getElementById("newchartText").style.display = "none";
 }
 
 function unfade(element) {

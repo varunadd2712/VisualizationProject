@@ -29,7 +29,10 @@ h1 {
 }
 
 .center {
-  margin-left: 350px;
+  margin-left: 410px;
+}
+.center text{
+  margin-left: 0px;
 }
 .donutcenter {
   margin-left: 600px;
@@ -187,6 +190,13 @@ h1 {
     width: 35%;
     float:right;
     margin-right: 100px;
+    height: 800px;
+}
+
+.sideBarOffRight {
+    display: inline-block;
+    width: 35%;
+    margin-left:300px;
     height: 800px;
 }
 

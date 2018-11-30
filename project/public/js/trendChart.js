@@ -3,6 +3,8 @@ class TrendChart {
   constructor () {
     let divChart = d3.select("#trendchart").classed("fullView", true);
     let divChart2 = d3.select("#newchart").classed("center", true);
+    let divChart3 = d3.select("#newchartText").classed("fullView", true);
+
     this.svgBounds = divChart.node().getBoundingClientRect();
 
     this.svgWidth = 700;
@@ -19,6 +21,11 @@ class TrendChart {
     .attr("width", this.svgWidth + this.svgWidth2)
     .attr("height", this.svgHeight2)
     .attr("id", "trendChartTextSvg");
+
+    this.trendChartTextSvg2 = divChart3.append("svg")
+    .attr("width", this.svgWidth + this.svgWidth2)
+    .attr("height", this.svgHeight2)
+    .attr("id", "trendChartTextSvg2");
 
     this.lineChartSvg = divChart.append("svg")
     .attr("width", this.svgWidth)
@@ -38,7 +45,7 @@ class TrendChart {
     .attr("id", "lineChartTextSvg");
 
     this.vulnerableTextSvg = divChart.append("svg")
-    .attr("width", this.svgWidth2)
+    .attr("width", this.svgWidth2 +10)
     .attr("height", this.svgHeight)
     .attr("id", "vulnerableTextSvg")
     .classed("sideBar",true);
@@ -320,8 +327,7 @@ class TrendChart {
       .style('left', (d3.event.layerX - 25) + 'px');
     })
     .on('mouseout', function(d) {
-      d3.selectAll("rect")
-      .style("fill", function(d){return color(d.group);})
+      d3.select(this).style("fill", function(d){return color(d.group);})
       .style("stroke", "none")
 
       tooltip.style('display', 'none');
@@ -334,14 +340,56 @@ class TrendChart {
     this.update2();
     let dataArray = [];
     dataArray.push("singleString");
+
+
     this.trendChartTextSvg.selectAll("g").remove();
     let dataEnteredG = this.trendChartTextSvg.selectAll("g").data(dataArray);
+    let dataEnteredG2 = this.trendChartTextSvg2.selectAll("g").data(dataArray);
+
+    dataEnteredG2 = dataEnteredG.enter().append("g");
+    let textBlock3 = this.trendChartTextSvg2.append("g");
+
+    textBlock3.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("The chart below represents the number of crimes")
+    .attr("y", (this.svgHeight2/2)-30)
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock3.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("each year on different ethnic groups")
+    .attr("y", (this.svgHeight2/2))
+    .attr("class", "yeartext")
+    .attr("fill", "black")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock3.append("text")
+       .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+       .text("Hover on the bars to see the values")
+       .attr("y", (this.svgHeight2/2)+50)
+       .attr("class", "yeartext")
+       .attr("fill", "black")
+       .style("font-size", "25px")
+       .attr("opacity", 0)
+       .transition()
+       .duration(3000)
+       .attr("opacity", 1);
+
     dataEnteredG = dataEnteredG.enter().append("g");
     let textBlock2 = this.trendChartTextSvg.append("g");
 
     textBlock2.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("Below are the trends of the crimes across the years")
+    .text("Below are the total number of crimes across the years")
     .attr("y", (this.svgHeight2/2)-30)
     .attr("class", "yeartext")
     .style("font-size", "25px")
@@ -352,7 +400,7 @@ class TrendChart {
 
     textBlock2.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("Click on a point to know more details.")
+    .text("Brush on a point to know the vulnerable groups for that year")
     .attr("y", (this.svgHeight2/2))
     .attr("class", "yeartext")
     .attr("fill", "black")
@@ -661,7 +709,7 @@ class TrendChart {
     let textBlock = this.vulnerableTextSvg.append("g");
 
     textBlock.append("text")
-    .attr("x", this.svgWidth2/2)
+    .attr("x", this.svgWidth2/3)
     .text("We can see ")
     .attr("y", 50)
     .attr("class", "yeartext")
@@ -672,7 +720,7 @@ class TrendChart {
     .attr("opacity", 1);
 
     textBlock.append("text")
-    .attr("x", this.svgWidth2/2)
+    .attr("x", this.svgWidth2/3)
     .text("that African Americans, Jews ")
     .attr("y", 90)
     .attr("class", "yeartext")
@@ -683,7 +731,7 @@ class TrendChart {
     .attr("opacity", 1);
 
     textBlock.append("text")
-    .attr("x", this.svgWidth2/2)
+    .attr("x", this.svgWidth2/3)
     .text(" and Male homosexuals")
     .attr("y", 130)
     .attr("class", "yeartext")
@@ -694,7 +742,7 @@ class TrendChart {
     .attr("opacity", 1);
 
     textBlock.append("text")
-    .attr("x", this.svgWidth2/2)
+    .attr("x", this.svgWidth2/3)
     .text(" are the three most targeted groups")
     .attr("y", 170)
     .attr("class", "yeartext")
@@ -705,7 +753,7 @@ class TrendChart {
     .attr("opacity", 1);
 
     textBlock.append("text")
-    .attr("x", this.svgWidth2/2)
+    .attr("x", this.svgWidth2/3)
     .text(" across the years.")
     .attr("y", 210)
     .attr("class", "yeartext")

@@ -25,20 +25,23 @@ class TrendChart {
     .attr("height", this.svgHeight + 40)
     .attr("id", "lineChartSvg");
 
-    this.lineChartTextSvg = divChart.append("svg")
-    .attr("width", this.svgWidth2)
-    .attr("height", this.svgHeight)
-    .attr("id", "lineChartTextSvg");
-
     this.vulnerableChartSvg = divChart.append("svg")
     .attr("width", this.svgWidth)
     .attr("height", this.svgHeight+900)
-    .attr("id", "vulnerableChartSvg");
+    .attr("id", "vulnerableChartSvg")
+    .attr("class","sideBarVul")
+    .style("overflow-y","scroll");
+
+    this.lineChartTextSvg = divChart.append("svg")
+    .attr("width", this.svgWidth2)
+    .attr("height", this.svgHeight/5)
+    .attr("id", "lineChartTextSvg");
 
     this.vulnerableTextSvg = divChart.append("svg")
     .attr("width", this.svgWidth2)
     .attr("height", this.svgHeight)
-    .attr("id", "vulnerableTextSvg");
+    .attr("id", "vulnerableTextSvg")
+    .classed("sideBar",true);
 
     this.vulnerable2008 = [{group:"Anti-Black/African American", value:3413}, {group:"Anti-Jewish", value:1055}, {group:"Anti-Male Homosexual", value:948}];
     this.vulnerable2009 = [{group:"Anti-Black/African American", value:2724}, {group:"Anti-Jewish", value:964}, {group:"Anti-Male Homosexual", value:798}];
@@ -366,7 +369,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text("In this trend, we see ")
-    .attr("y", 190)
+    .attr("y", 50)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -377,7 +380,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text("there was a sharp dip in crime from 2008 to 2014,")
-    .attr("y", 220)
+    .attr("y", 90)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -388,7 +391,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text("after which it started to pick up.")
-    .attr("y", 250)
+    .attr("y", 130)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -660,7 +663,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text("We can see ")
-    .attr("y", 190)
+    .attr("y", 50)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -671,7 +674,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text("that African Americans, Jews ")
-    .attr("y", 220)
+    .attr("y", 90)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -682,7 +685,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text(" and Male homosexuals")
-    .attr("y", 250)
+    .attr("y", 130)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -693,7 +696,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text(" are the three most targeted groups")
-    .attr("y", 280)
+    .attr("y", 170)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -704,7 +707,7 @@ class TrendChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text(" across the years.")
-    .attr("y", 310)
+    .attr("y", 210)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)

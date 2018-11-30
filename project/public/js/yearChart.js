@@ -1,4 +1,4 @@
-class YearChart {
+  class YearChart {
 
     /**
      * Constructor for the Year Chart
@@ -59,10 +59,15 @@ class YearChart {
           return "translate(" + x  + "," + y + ")";
         });
 
+          
+
 
         gselection.append("circle")
         .attr("r", 10)
         .attr("class", "yearCircles")
+        .attr("id",function(d){
+          let stringValue = "circle-" + d;
+          return stringValue})
         .on("mouseover", function() {
           d3.select(this).classed("highlighted",true);
         })
@@ -93,6 +98,28 @@ class YearChart {
             })
           });
 
+
+        let selectedYear = 2016;
+        d3.selectAll("circle").classed("selected",false);
+        d3.select("#circle-"+selectedYear).classed("selected",true);
+
+        d3.csv("data/TotalOffenses_"+selectedYear+".csv").then(offenseResult => {
+            that.statesBarChart.update(offenseResult)
+            that.geographicalMapChart.update(offenseResult)
+            d3.json("data/Types"+selectedYear+".json").then(typesResult =>{
+              that.donutChart.update(typesResult,offenseResult);
+          })
+          })
+
+
+
+          d3.csv("data/OffenseTypesFormatted_2016.csv").then(offenseTypes => {
+            that.treemap.update(offenseTypes);
+          })
+
+          d3.csv("data/Victims_"+selectedYear+".csv").then(offenseTypesUnformatted => {
+                that.victimChart.update(offenseTypesUnformatted);
+            })
 
 
         gselection.append("text")

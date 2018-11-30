@@ -1,24 +1,23 @@
-document.getElementById("victimsChart").style.display = "block";
-document.getElementById("genderChart").style.display = "block";
-document.getElementById("religionChart").style.display = "block";
-document.getElementById("treemap-chart").style.display = "block";
-document.getElementById("geographical-map-chart").style.display = "block";
-document.getElementById("states-bar-chart").style.display = "block";
-document.getElementById("chart").style.display = "block";
+document.getElementById("victimsChart").style.display = "none";
+document.getElementById("genderChart").style.display = "none";
+document.getElementById("religionChart").style.display = "none";
+document.getElementById("treemap-chart").style.display = "none";
+document.getElementById("geographical-map-chart").style.display = "none";
+document.getElementById("states-bar-chart").style.display = "none";
+document.getElementById("chart").style.display = "none";
 document.getElementById("trendchart").style.display = "block";
 document.getElementById("newchart").style.display = "block";
-document.getElementById("map-text-chart").style.display = "block";
-document.getElementById("dropdownDiv").style.display = "block";
-document.getElementById("donutAndDropdown").style.display = "block";
-document.getElementById("victimsChart").style.display = "block";
-document.getElementById("genderChart").style.display = "block";
-document.getElementById("religionChart").style.display = "block";
+document.getElementById("map-text-chart").style.display = "none";
+document.getElementById("dropdownDiv").style.display = "none";
+document.getElementById("donutAndDropdown").style.display = "none";
+document.getElementById("victimsChart").style.display = "none";
+document.getElementById("genderChart").style.display = "none";
+document.getElementById("religionChart").style.display = "none";
+document.getElementById("year-chart").style.display = "none";
+
 
 flag_map=true
 flag_bar=true
-
-let victimChartDiv = document.getElementById('victimsChart').getBoundingClientRect();
-console.log(victimChartDiv.top);
 
 function updateLinksMap(stateName,crimes){
   geographicalMapChart.updateLinks(stateName,crimes,flag_map)
@@ -51,6 +50,72 @@ let yearChart = new YearChart(statesBarChart, geographicalMapChart, treemap, don
 geographicalMapChart.drawMap()
 yearChart.update();
 
+function openDiv(evt, selectionName) {
+    //Hide all divs initially.
+    tablinks = document.getElementsByClassName("tablinks");
+
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    evt.path["0"].className += " active";
+
+    noneAll();
+
+     if(selectionName === "Summary") {
+       document.getElementById("year-chart").style.display = "none";
+       document.getElementById("newchart").style.display = "block";
+       document.getElementById("trendchart").style.display = "block";
+       trendChart.update();
+     }
+
+    else if (selectionName === "Map") {
+      document.getElementById("year-chart").style.display = "block";
+      document.getElementById("geographical-map-chart").style.display = "block";
+      document.getElementById("states-bar-chart").style.display = "block";
+      geographicalMapChart.updateFromScript();
+      statesBarChart.updateFromScript();
+    }
+
+    else if(selectionName === "Breakdown") {
+      document.getElementById("year-chart").style.display = "block";
+      document.getElementById("treemap-chart").style.display = "block";
+      treemap.updateFromScript();
+    }
+
+    else if(selectionName === "StateCompare") {
+      document.getElementById("year-chart").style.display = "block";
+      unfade(document.getElementById("dropdownDiv"));
+      unfade(document.getElementById("donutAndDropdown"));
+      unfade(document.getElementById("chart"));
+
+      document.getElementById("dropdownDiv").style.display = "block";
+      document.getElementById("donutAndDropdown").style.display = "block";
+      document.getElementById("chart").style.display = "block";
+    }
+
+
+    else if(selectionName === "VictimChart") {
+      document.getElementById("year-chart").style.display = "block";
+      document.getElementById("victimsChart").style.display = "block";
+      document.getElementById("genderChart").style.display = "block";
+      document.getElementById("religionChart").style.display = "block";
+      victimChart.updateFromScript();
+    }
+    /*
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    */
+}
+/*
 let myScrollFunc = function() {
 
   var y = window.scrollY;
@@ -153,7 +218,38 @@ const scrollToTop = () => {
     window.addEventListener("scroll", myScrollFunc);
   }
 };
+*/
 
+function noneAll() {
+  document.getElementById("victimsChart").style.display = "none";
+  document.getElementById("genderChart").style.display = "none";
+  document.getElementById("religionChart").style.display = "none";
+  document.getElementById("treemap-chart").style.display = "none";
+  document.getElementById("geographical-map-chart").style.display = "none";
+  document.getElementById("states-bar-chart").style.display = "none";
+  document.getElementById("chart").style.display = "none";
+  document.getElementById("trendchart").style.display = "none";
+  document.getElementById("newchart").style.display = "none";
+  document.getElementById("map-text-chart").style.display = "none";
+  document.getElementById("dropdownDiv").style.display = "none";
+  document.getElementById("donutAndDropdown").style.display = "none";
+  document.getElementById("victimsChart").style.display = "none";
+  document.getElementById("genderChart").style.display = "none";
+  document.getElementById("religionChart").style.display = "none"
+}
+
+function unfade(element) {
+    var op = 0.1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op += op * 0.1;
+    }, 50);
+}
 //window.addEventListener("scroll", myScrollFunc);
 /*$(window).scroll(function() {
 console.log("calling");

@@ -204,8 +204,6 @@ class TrendChart {
       someData[i] = currentJson;
     }
 
-
-
     console.log("here");
     console.log(someData);
     console.log("hereend");
@@ -509,9 +507,9 @@ class TrendChart {
          for(let i=0; i<=yData.length;++i){
             if(xScale(xData[i])>=x1 -80&& xScale(xData[i])<=x2-80){
                 if(yScale(yData[i])>=y1+30&&yScale(yData[i])<=y2+30){
-                    selectedYears.push(xData[i])    
+                    selectedYears.push(xData[i])
                 }
-            }  
+            }
          }
          console.log(selectedYears)
          that.drawBarChart(selectedYears)

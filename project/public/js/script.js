@@ -9,6 +9,7 @@ document.getElementById("trendchart").style.display = "block";
 document.getElementById("newchart").style.display = "block";
 document.getElementById("map-text-chart").style.display = "none";
 document.getElementById("dropdownDiv").style.display = "none";
+document.getElementById("dropdownText").style.display = "none";
 document.getElementById("donutAndDropdown").style.display = "none";
 document.getElementById("victimsChart").style.display = "none";
 document.getElementById("genderChart").style.display = "none";
@@ -93,6 +94,7 @@ function openDiv(evt, selectionName) {
       unfade(document.getElementById("chart"));
 
       document.getElementById("dropdownDiv").style.display = "block";
+      document.getElementById("dropdownText").style.display = "block";
       document.getElementById("donutAndDropdown").style.display = "block";
       document.getElementById("chart").style.display = "block";
     }
@@ -240,6 +242,8 @@ function noneAll() {
   document.getElementById("genderChart").style.display = "none";
   document.getElementById("religionChart").style.display = "none"
   document.getElementById("newchartText").style.display = "none";
+  document.getElementById("dropdownText").style.display = "none";
+
 }
 
 function unfade(element) {

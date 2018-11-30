@@ -5,21 +5,68 @@ class DonutChart {
     let divDonutChart = d3.select("#chart");
     let donutAndDropdown = d3.select("#donutAndDropdown").classed("sideBarLeft", true);
     let dropdownDiv = d3.select("#dropdownDiv").classed("sideBarLeft", true);
+    let dropdownTextDiv = d3.select("#dropdownText").classed("fullView", true);
+
     this.svgBounds = divDonutChart.node().getBoundingClientRect();
 
     this.svgWidth = 750;
+    this.svgWidth2 = 850;
     this.svgHeight = 1500;
+    this.svgHeight3 = 667;
+
+    this.svgHeight2 = 100;
+
     this.padding = 25;
 
     //add the svg to the div
     /*this.svg = divDonutChart.append("svg")
         .attr("width", this.svgWidth + 2*this.padding)
         .attr("height", this.svgHeight + 2*this.padding)*/
+    this.trendChartTextSvg = dropdownTextDiv.append("svg")
+        .attr("width", this.svgWidth + this.svgWidth2)
+        .attr("height", this.svgHeight2)
+        .attr("id", "donutTextSvg");
 
     this.donutSVG = donutAndDropdown.append("svg").attr("width",750).attr("height",250);
     };
 
-    prepareDonut(blueState,redState,data,data_pop){
+    prepareDonut(blueState,redState,data,data_pop) {
+      let dataArray = [];
+      dataArray.push("singleString");
+
+
+      this.trendChartTextSvg.selectAll("g").remove();
+
+
+      let dataEnteredG = this.trendChartTextSvg.selectAll("g").data(dataArray);
+
+      dataEnteredG = dataEnteredG.enter().append("g");
+      let textBlock2 = this.trendChartTextSvg.append("g");
+
+      textBlock2.append("text")
+      .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+      .text("Use the charts below to compare the states")
+      .attr("y", (this.svgHeight2/2)-30)
+      .attr("class", "yeartext")
+      .style("font-size", "25px")
+      .attr("opacity", 0)
+      .transition()
+      .duration(3000)
+      .attr("opacity", 1);
+
+      textBlock2.append("text")
+      .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+      .text("The radar chart depicts the comparison on various parameters")
+      .attr("y", (this.svgHeight2/2))
+      .attr("class", "yeartext")
+      .attr("fill", "black")
+      .style("font-size", "25px")
+      .attr("opacity", 0)
+      .transition()
+      .duration(3000)
+      .attr("opacity", 1);
+
+
     	console.log(data_pop)
     	let sum=0
   		let prop_blue =0

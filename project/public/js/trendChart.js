@@ -626,6 +626,8 @@ class TrendChart {
           .text("Vulnerable Group");
 
     let plotData;
+
+
     for(let i=0;i<selectedyear.length;++i){
         let year = selectedyear[i]
         if(year == 2008)
@@ -684,6 +686,9 @@ class TrendChart {
           .attr("width", function(d, i) {
             return xScale(d.value);
           });
+
+          this.vulnerableChartSvg.selectAll("rect").append('svg:title')
+            .text((d, i) => "Number of Crimes : " + d.value);
 
           gElement.selectAll("text")
                 .data(plotData)

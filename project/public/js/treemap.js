@@ -22,6 +22,8 @@ class Treemap {
     .attr("height", this.svgHeight2)
     .attr("id", "treemapTextSvg");
 
+
+
     this.treemapSVG = divMapChart.append("svg")
     .attr("width", this.svgWidth)
     .attr("height", this.svgHeight)
@@ -30,10 +32,53 @@ class Treemap {
 
   updateFromScript() {
     console.log("triggered update");
-    this.update(this.currentData);
+    this.update(this.currentData, this.year);
   }
 
-  update2() {
+  update2(yearValue) {
+
+    let dataArray = [];
+    dataArray.push("singleString");
+    d3.select("#aster-chart").selectAll("svg").remove();
+
+    let divAsterChartDiv = d3.select("#aster-chart").classed("center", true);
+
+    this.treemapTextSvg2 = divAsterChartDiv.append("svg")
+    .attr("width", this.svgWidth + this.svgWidth2)
+    .attr("height", this.svgHeight2)
+    .attr("id", "treemapTextSvg2");
+
+    this.treemapTextSvg2.selectAll("g").remove();
+
+
+    let dataEnteredG = this.treemapTextSvg2.selectAll("g").data(dataArray);
+    dataEnteredG = dataEnteredG.enter().append("g");
+    let textBlock = this.treemapTextSvg2.append("g");
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Below is a chart representing the proportions of crimes")
+    .attr("y", (this.svgHeight2/2)-30)
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Intimidation, Vandalism and Assault are the biggest Hate Crimes")
+    .attr("y", (this.svgHeight2/2))
+    .attr("class", "yeartext")
+    .attr("fill", "black")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+
     let width2 = 500;
     let height2 = 500;
     let radius2 = Math.min(width2, height2) / 2;
@@ -50,17 +95,18 @@ class Treemap {
       return d.data.label + ": <span style='color:orangered'>" + d.data.score + "</span>";
     });
 
+    let xAxis = d3.scaleLinear().domain([5, 1577]).range([0.2, 0.8]);
+
     let arc = d3.arc()
     .innerRadius(innerRadius2)
     .outerRadius(function (d) {
-      return (radius2 - innerRadius2) * (d.data.score / 100.0) + innerRadius2;
+      return (radius2 - innerRadius2) * xAxis(d.data.score) + innerRadius2 + 10;
     });
 
     let outlineArc = d3.arc()
     .innerRadius(innerRadius2)
     .outerRadius(radius2);
 
-     d3.select("#aster-chart").selectAll("svg").remove();
      let divAsterChart = d3.select("#aster-chart");
     let svg = divAsterChart.append("svg")
     .attr("width", width2)
@@ -69,8 +115,8 @@ class Treemap {
     .attr("transform", "translate(" + width2 / 2 + "," + height2 / 2 + ")");
 
     svg.call(tip);
-
-    d3.csv('data/aster_data.csv').then(data => {
+    let fileString = "data/aster_data_" + yearValue + ".csv";
+    d3.csv(fileString).then(data => {
       this.update4(data, svg, pie, arc, outlineArc, tip);
 
     });
@@ -86,6 +132,7 @@ class Treemap {
       d.score  = +d.score;
       d.width  = +d.weight;
       d.label  =  d.label;
+      d.total = d.total;
     })
 
     let outerPath = svg.selectAll(".outlineArc")
@@ -117,12 +164,8 @@ class Treemap {
 
 
     // calculate the weighted mean score
-    let score =
-
-    data.reduce(function(a, b) {
-      //console.log('a:' + a + ', b.score: ' + b.score + ', b.weight: ' + b.weight);
-      return a + (b.score);
-    }, 0);
+    let score = data[0].total;
+    console.log(data);
 
     svg.append("svg:text")
     .attr("class", "aster-score")
@@ -131,9 +174,14 @@ class Treemap {
     .text(Math.round(score));
   }
 
-  update(data)
+  update(data, year)
   {
-    this.update2();
+
+    console.log("year value");
+    this.year = year;
+    console.log(year);
+    this.update2(year);
+    /*
     console.log("triggered treemap");
     this.currentData = data;
     let dataArray = [];
@@ -238,6 +286,6 @@ class Treemap {
     cell.append("title")
     .text(d => d.id + " - " + d.value );
 
-
+*/
   };
 };

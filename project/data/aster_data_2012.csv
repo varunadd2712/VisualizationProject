@@ -1,0 +1,14 @@
+"id","order","score","weight","color","label","total"
+"FIS",1.5,59,0.5,"#9E0041","Murder",5796
+"MAR",1.15,24,0.5,"#C32F4B","Rape",5796
+"AO",2,644,1,"#E1514B","Aggravated Assault",5796
+"CP",5,126,1,"#FEC574","Robbery",5796
+"TR",6,142,1,"#FAE38C","Burglary",5796
+"CS",4,1230,1,"#FB9F59","Intimidation",5796
+"LIV",7.258,77,0.5,"#EAF195","Larceny",5796
+"ECO",7.23,88,0.5,"#C7E89E","Motor Theft",5796
+"ICO",8.38,60,0.5,"#9CD6A4","Arson",5796
+"NP",3,1336,1,"#F47245","Simple Assault",5796
+"LSP",8.1906,65,0.5,"#6CC4A4","Vandalism",5796
+"CW",9,82,1,"#4D9DB4","Other",5796
+"HAB",10.203,88,0.5,"#4776B4","Crimes Against Society",5796

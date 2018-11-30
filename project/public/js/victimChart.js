@@ -163,8 +163,19 @@ class VictimChart {
 
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
+    .text("Each symbol on the left represents 50 people")
+    .attr("y", 170)
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2)
     .text("Total victims of " + stringText + " crime")
-    .attr("y", 190)
+    .attr("y", 220)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -175,7 +186,7 @@ class VictimChart {
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
     .text("this year")
-    .attr("y", 220)
+    .attr("y", 250)
     .attr("class", "yeartext")
     .style("font-size", "25px")
     .attr("opacity", 0)
@@ -186,7 +197,7 @@ class VictimChart {
     dataEnteredG.append("text")
     .attr("x", this.svgWidth2/2)
     .text(0)
-    .attr("y", 250)
+    .attr("y", 280)
     .attr("class", "yeartext")
     .style("font-size", "25px");
 

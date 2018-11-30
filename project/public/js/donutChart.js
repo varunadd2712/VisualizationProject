@@ -45,7 +45,7 @@ class DonutChart {
 
       textBlock2.append("text")
       .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-      .text("Use the charts below to compare the states")
+      .text("The below charts provide a metric to compare two states")
       .attr("y", (this.svgHeight2/2)-30)
       .attr("class", "yeartext")
       .style("font-size", "25px")
@@ -56,7 +56,7 @@ class DonutChart {
 
       textBlock2.append("text")
       .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-      .text("The radar chart depicts the comparison on various parameters")
+      .text("based on the types of crimes committed.")
       .attr("y", (this.svgHeight2/2))
       .attr("class", "yeartext")
       .attr("fill", "black")

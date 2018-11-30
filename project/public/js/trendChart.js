@@ -352,7 +352,7 @@ class TrendChart {
 
     textBlock3.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("The chart below represents the number of crimes")
+    .text("The chart below represents the number of crimes committed")
     .attr("y", (this.svgHeight2/2)-30)
     .attr("class", "yeartext")
     .style("font-size", "25px")
@@ -363,7 +363,7 @@ class TrendChart {
 
     textBlock3.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("each year on different ethnic groups")
+    .text("each year on different ethnic groups.")
     .attr("y", (this.svgHeight2/2))
     .attr("class", "yeartext")
     .attr("fill", "black")
@@ -375,7 +375,7 @@ class TrendChart {
 
     textBlock3.append("text")
        .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-       .text("Hover on the bars to see the values")
+       .text("Hover on the bars to see the number of crimes")
        .attr("y", (this.svgHeight2/2)+50)
        .attr("class", "yeartext")
        .attr("fill", "black")
@@ -390,7 +390,7 @@ class TrendChart {
 
     textBlock2.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("Below are the total number of crimes across the years")
+    .text("The chart below shows the trend of hate crimes across the years")
     .attr("y", (this.svgHeight2/2)-30)
     .attr("class", "yeartext")
     .style("font-size", "25px")
@@ -401,7 +401,7 @@ class TrendChart {
 
     textBlock2.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("Brush on a point to know the vulnerable groups for that year")
+    .text("Select the points to see the most affected ethnicities")
     .attr("y", (this.svgHeight2/2))
     .attr("class", "yeartext")
     .attr("fill", "black")
@@ -439,7 +439,7 @@ class TrendChart {
 
     textBlock.append("text")
     .attr("x", this.svgWidth2/2)
-    .text("after which it started to pick up.")
+    .text("after which it starts to pick up.")
     .attr("y", 130)
     .attr("class", "yeartext")
     .style("font-size", "25px")

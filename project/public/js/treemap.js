@@ -57,7 +57,7 @@ class Treemap {
 
     textBlock.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("Below is a chart representing the proportions of crimes")
+    .text("This chart represents the various types of crimes.")
     .attr("y", (this.svgHeight2/2)-30)
     .attr("class", "yeartext")
     .style("font-size", "25px")
@@ -68,8 +68,19 @@ class Treemap {
 
     textBlock.append("text")
     .attr("x", this.svgWidth2/2 + this.svgWidth/2)
-    .text("Intimidation, Vandalism and Assault are the biggest Hate Crimes")
+    .text("Hover on the segments to see the magnitude of the crimes")
     .attr("y", (this.svgHeight2/2))
+    .attr("class", "yeartext")
+    .style("font-size", "25px")
+    .attr("opacity", 0)
+    .transition()
+    .duration(3000)
+    .attr("opacity", 1);
+
+    textBlock.append("text")
+    .attr("x", this.svgWidth2/2 + this.svgWidth/2)
+    .text("Intimidation, Vandalism and Assault are the biggest Hate Crimes")
+    .attr("y", (this.svgHeight2/2) + 45)
     .attr("class", "yeartext")
     .attr("fill", "black")
     .style("font-size", "25px")
@@ -95,7 +106,7 @@ class Treemap {
       return d.data.label + ": <span style='color:orangered'>" + d.data.score + "</span>";
     });
 
-    let xAxis = d3.scaleLinear().domain([5, 1577]).range([0.2, 0.8]);
+    let xAxis = d3.scaleLinear().domain([0, 2577]).range([0.2, 0.8]);
 
     let arc = d3.arc()
     .innerRadius(innerRadius2)
@@ -138,7 +149,7 @@ class Treemap {
     let outerPath = svg.selectAll(".outlineArc")
     .data(pie(data))
     .enter().append("path")
-    .attr("fill", "black")
+    .attr("fill", "white")
     .attr("stroke", "gray")
     .attr("class", "outlineArc")
     .attr("d", outlineArc)

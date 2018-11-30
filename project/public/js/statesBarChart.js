@@ -5,7 +5,7 @@ class StatesBarChart {
    * Pass objects of the other charts here.
    */
   constructor (updateMapfunc) {
-    let divStateChart = d3.select("#states-bar-chart").classed("sideBar", true);
+    let divStateChart = d3.select("#states-bar-chart").classed("sideBarChart", true);
     this.svgBounds = divStateChart.node().getBoundingClientRect();
     this.currentData = null;
     this.svgWidth = 750;

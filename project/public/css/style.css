@@ -191,6 +191,16 @@ h1 {
     height: 800px;
 }
 
+.sideBarChart {
+    display: inline-block;
+    width: 35%;
+    float:right;
+    margin-right: 100px;
+    height: 800px;
+    overflow-y : scroll;
+    overflow-x : hidden;
+}
+
 .sideBarLeft {
     display: inline-block;
     width: 100%;

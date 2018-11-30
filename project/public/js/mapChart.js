@@ -23,7 +23,7 @@ class GeographicalMapChart{
 	    //add the svg to the div
 	    this.geoMapSVG = divMapChart.append("svg")
 	    .attr("width", this.svgWidth)
-	    .attr("height", this.svgHeight)
+	    .attr("height", this.svgHeight-80)
 	    .attr("id", "GeoMapSVG");
 
 	    let infobox = d3.select("#infobox");
@@ -52,7 +52,7 @@ class GeographicalMapChart{
             // In order to convert lat / lon (spherical!) coordinates to fit in the 2D
             // coordinate system of our screen, we need to create a projection function:
             let projection = d3.geoAlbersUsa() // a USA-specific projection (that deals with Hawaii / Alaska)
-                .translate([that.svgWidth / 2, that.svgHeight / 2]) // this centers the map in our SVG element
+                .translate([that.svgWidth / 2, that.svgHeight / 2 -60]) // this centers the map in our SVG element
                 .scale([900]); // this specifies how much to zoom
 
             // This converts the projected lat/lon coordinates into an SVG path string
@@ -130,7 +130,7 @@ class GeographicalMapChart{
 		async function choropleth() {
 
             let projection = d3.geoAlbersUsa()
-                .translate([that.svgWidth / 2, that.svgHeight / 2])
+                .translate([that.svgWidth / 2, that.svgHeight / 2-60])
                 .scale([900]);
 
             let path = d3.geoPath().projection(projection);
@@ -239,8 +239,8 @@ class GeographicalMapChart{
             let updbar = that.updateLinksBar
 	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseover",function(d){
 	    		let tooltip_data = {"state":d.properties.name,"crimes":d3.format('.2f')(d.properties.value)}
-	    		that.infosvg.append("text").attr("x",0).attr("y",50).html(d.properties.name)
-	    		that.infosvg.append("text").attr("x",0).attr("y",75).html("Crime per million: " + tooltip_data["crimes"])
+	    		that.infosvg.append("text").attr("x",0).attr("y",45).style("font-size",25).text(d.properties.name)
+	    		that.infosvg.append("text").attr("x",0).attr("y",70).style("font-size",20).html("Crime per million: " + tooltip_data["crimes"])
 	    		d3.select(this).style("stroke","white").style("stroke-width",4)
                 updbar(tooltip_data.state)
 	    	})
@@ -266,8 +266,8 @@ class GeographicalMapChart{
         else{
             this.geoMapSVG.select("path#"+stateName.split(' ').join('')).style("stroke","white").style("stroke-width",4)
             let paths = this.geoMapSVG.select("path#"+stateName)
-            this.infosvg.append("text").attr("x",0).attr("y",50).html(stateName)
-            this.infosvg.append("text").attr("x",0).attr("y",75).html("Crime per million: " + crimes)
+            this.infosvg.append("text").attr("x",0).attr("y",50).style("font-size",25).html(stateName)
+            this.infosvg.append("text").attr("x",0).attr("y",75).style("font-size",20).html("Crime per million: " + crimes)
             
         }
 

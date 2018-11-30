@@ -31,6 +31,10 @@ h1 {
 .center {
   margin-left: 350px;
 }
+.donutcenter {
+  margin-left: 600px;
+}
+
 
 .fullView {
     display: inline-block;

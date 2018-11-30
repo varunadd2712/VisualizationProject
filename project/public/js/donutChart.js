@@ -172,7 +172,7 @@ class DonutChart {
   	let allAxis = (d[0].map(function(i, j){return i.axis}));
   	let total = allAxis.length;
   	let radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
-  	let Format = d3.format('%');
+  	let Format = d3.format('%','03d');
 
   	let g = d3.select(id)
   			.append("svg")
@@ -370,8 +370,8 @@ class DonutChart {
    	states.push(data2[i]["STATE"])
    }
 
-   let blueState = "Alabama"
-   let redState = "Alabama"
+   let blueState = "California"
+   let redState = "Utah"
    let d = [];
    d.push(data[blueState]);
    d.push(data[redState]);
@@ -402,6 +402,7 @@ class DonutChart {
             .data(states)
             .enter().append("option")
             .attr("value", function (d) { return d; })
+            .property("selected",function(d){return d === "California";})
             .text(function (d) {
             return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
             });
@@ -410,6 +411,7 @@ class DonutChart {
             .data(states)
             .enter().append("option")
             .attr("value", function (d) { return d; })
+            .property("selected",function(d){return d === "Utah";})
             .text(function (d) {
             return d[0].toUpperCase() + d.slice(1,d.length); // capitalize 1st letter
             });

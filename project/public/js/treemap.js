@@ -7,7 +7,10 @@ class Treemap {
   */
   constructor () {
     let divMapChart = d3.select("#treemap-chart").classed("fullview", true);
+    let divAsterChart = d3.select("#aster-chart").classed("center", true);
     this.svgBounds = divMapChart.node().getBoundingClientRect();
+    this.svgBounds = divAsterChart.node().getBoundingClientRect();
+
     this.currentData = null;
     this.svgWidth = 800;
     this.svgWidth2 = 800;
@@ -30,9 +33,107 @@ class Treemap {
     this.update(this.currentData);
   }
 
+  update2() {
+    let width2 = 500;
+    let height2 = 500;
+    let radius2 = Math.min(width2, height2) / 2;
+    let innerRadius2 = 0.3 * radius2;
+
+    let pie = d3.pie()
+    .sort(null)
+    .value(function(d) { return d.width; });
+
+    var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([0, 0])
+    .html(function(d) {
+      return d.data.label + ": <span style='color:orangered'>" + d.data.score + "</span>";
+    });
+
+    let arc = d3.arc()
+    .innerRadius(innerRadius2)
+    .outerRadius(function (d) {
+      return (radius2 - innerRadius2) * (d.data.score / 100.0) + innerRadius2;
+    });
+
+    let outlineArc = d3.arc()
+    .innerRadius(innerRadius2)
+    .outerRadius(radius2);
+
+     d3.select("#aster-chart").selectAll("svg").remove();
+     let divAsterChart = d3.select("#aster-chart");
+    let svg = divAsterChart.append("svg")
+    .attr("width", width2)
+    .attr("height", height2)
+    .append("g")
+    .attr("transform", "translate(" + width2 / 2 + "," + height2 / 2 + ")");
+
+    svg.call(tip);
+
+    d3.csv('data/aster_data.csv').then(data => {
+      this.update4(data, svg, pie, arc, outlineArc, tip);
+
+    });
+  }
+
+  update4(data, svg, pie, arc, outlineArc, tip) {
+
+    data.forEach(function(d) {
+      d.id     =  d.id;
+      d.order  = +d.order;
+      d.color  =  d.color;
+      d.weight = +d.weight;
+      d.score  = +d.score;
+      d.width  = +d.weight;
+      d.label  =  d.label;
+    })
+
+    let outerPath = svg.selectAll(".outlineArc")
+    .data(pie(data))
+    .enter().append("path")
+    .attr("fill", "black")
+    .attr("stroke", "gray")
+    .attr("class", "outlineArc")
+    .attr("d", outlineArc)
+    .attr("opacity", 0)
+    .transition()
+    .delay(function(d,i){ return i * 200 })
+    .attr("opacity", 1);
+
+    let path = svg.selectAll(".solidArc")
+    .data(pie(data))
+    .enter().append("path")
+    .attr("fill", function(d) { return d.data.color; })
+    .attr("class", "solidArc")
+    .attr("stroke", "gray")
+    .attr("d", arc)
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide)
+    .attr("opacity", 0)
+    .transition()
+    .delay(function(d,i){ return i * 400 })
+    .attr("opacity", 1);
+;
+
+
+    // calculate the weighted mean score
+    let score =
+
+    data.reduce(function(a, b) {
+      //console.log('a:' + a + ', b.score: ' + b.score + ', b.weight: ' + b.weight);
+      return a + (b.score);
+    }, 0);
+
+    svg.append("svg:text")
+    .attr("class", "aster-score")
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middle") // text-align: right
+    .text(Math.round(score));
+  }
+
   update(data)
   {
-
+    this.update2();
     console.log("triggered treemap");
     this.currentData = data;
     let dataArray = [];

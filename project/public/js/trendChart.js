@@ -262,7 +262,8 @@ class TrendChart {
     .style("stroke", "none")
     .attr("transform", function(d){
       return "rotate(" + d.a + "," + d.x  + "," + d.y + ")"; // rotate the bar
-    }).attr("opacity", 0)
+    })
+    .attr("opacity", 0)
     .transition()
     .delay(function(d,i){ return i * 50 })
     .attr("opacity", 1);

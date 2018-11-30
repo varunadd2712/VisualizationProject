@@ -236,11 +236,20 @@ class GeographicalMapChart{
 	            .attr("transform", function(d, i) {  return "translate("+(200)+",15 )"; })
 	            .call(legendAxis)
 
+
             let updbar = that.updateLinksBar
 	          that.geoMapSVG.select("#mapLayer").selectAll("path").on("mouseover",function(d){
 	    		let tooltip_data = {"state":d.properties.name,"crimes":d3.format('.2f')(d.properties.value)}
 	    		that.infosvg.append("text").attr("x",0).attr("y",45).style("font-size",25).text(d.properties.name)
 	    		that.infosvg.append("text").attr("x",0).attr("y",70).style("font-size",20).html("Crime per million: " + tooltip_data["crimes"])
+                if(d.properties.name=="Ohio" && tooltip_data["crimes"] == 617.02){
+                    //that.legendSvg.append("rect").attr("x",230).attr("y",45).attr("height",20).style("fill","white").style("stroke","black").attr("width",300).attr("id","dialog")
+                    that.legendSvg.append("text").attr("x",250).attr("y",60).attr("id","dialog").text("The exponential crime rate in Ohio!!!")
+                }
+                else{
+                    that.legendSvg.select("text#dialog").remove()
+                    //that.legendSvg.select("rect#dialog").remove()
+                }
 	    		d3.select(this).style("stroke","white").style("stroke-width",4)
                 updbar(tooltip_data.state)
 	    	})
